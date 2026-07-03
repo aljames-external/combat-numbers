@@ -1,6 +1,7 @@
 import { ease } from '../lib/ease.js';
 import AmountStylizer from './AmountStylizer.js';
 import Constants from './Constants.js';
+import CombatNumberLayer from './CombatNumberLayer.js';
 
 /**
  * A Renderer class to handle rendering responsibilities.
@@ -120,8 +121,8 @@ export default class Renderer {
    * @private
    */
   async _render(text, stylizerType, x, y) {
-    if (!this.layer) {
-      this.layer = canvas.combatNumbers || canvas.layers?.get('combatNumbers');
+    if (!this.layer || this.layer.destroyed) {
+      this.layer = canvas.combatNumbers || canvas.layers?.find((l) => l instanceof CombatNumberLayer);
     }
 
     const amountStylizer = new AmountStylizer(text, this.appearance);
