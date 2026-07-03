@@ -98,10 +98,20 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance');
     const defaultAppearance = CombatNumbersConfig.DEFAULT_APPEARANCE;
 
+    const fontName = appearance.font ?? defaultAppearance.font;
+    const fontKey = String(this._getFontKeyByName(fontName));
+
+    const fontListObj = {};
+    this._getFontList().forEach((fName, idx) => {
+      fontListObj[idx] = fName;
+    });
+
     return {
-      fontList: this._getFontList(),
+      fontList: fontListObj,
       fontSizeList: CombatNumbersConfig.FONT_SIZES,
-      font: appearance.font ?? defaultAppearance.font,
+      font: fontKey,
+      fontOther: fontName,
+      fontSize: appearance.fontSize ?? defaultAppearance.fontSize,
       bold: appearance.bold ?? defaultAppearance.bold,
       italic: appearance.italic ?? defaultAppearance.italic,
       damageColor: appearance.damageColor ?? defaultAppearance.damageColor,

@@ -28,11 +28,7 @@
             <label>{{localize "COMBATNUMBERS.SETTINGS.labelFontFamily"}}</label>
             <div class="form-fields">
                 <select name="font" id="cnFontSelect">
-                    {{#select font}}
-                    {{#each fontList as |name key|}}
-                        <option value="{{key}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{{selectOptions fontList selected=font}}}
                 </select>
             </div>
         </div>
@@ -48,11 +44,7 @@
             <label>{{localize "COMBATNUMBERS.SETTINGS.labelFontSize"}}</label>
             <div class="form-fields">
                 <select name="fontSize" id="cnFontSizeSelect">
-                    {{#select fontSize}}
-                    {{#each fontSizeList as |name key|}}
-                    <option value="{{key}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{{selectOptions fontSizeList selected=fontSize}}}
                 </select>
             </div>
         </div>
