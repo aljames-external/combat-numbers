@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import AbstractCalculator from './AbstractCalculator';
+import AbstractCalculator from './AbstractCalculator.js';
 
 /**
  * Used for any Token-specific calculations.
@@ -19,7 +18,7 @@ export default class TokenCalculator extends AbstractCalculator {
   shouldUseActorCoordination(tokenDoc) {
     const hpObjectPath = this.hpObjectPathFinder.getHpPath();
     const actorSystem = tokenDoc?.actor?.system || tokenDoc?.delta?.system;
-    return !actorSystem || !_.has(actorSystem, hpObjectPath);
+    return !actorSystem || !foundry.utils.hasProperty(actorSystem, hpObjectPath);
   }
 
   _getOrigEntityHpPath() {

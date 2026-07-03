@@ -1,4 +1,4 @@
-import CombatNumbersConfig from './CombatNumbersConfig';
+import CombatNumbersConfig from './CombatNumbersConfig.js';
 
 /**
  * A class to translate our appearance settings into a PIXI Text Style object.

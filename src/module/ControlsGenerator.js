@@ -1,4 +1,4 @@
-import State from './State';
+import State from './State.js';
 
 /**
  * Facilitate the generation of the Controls for the toolbar.
