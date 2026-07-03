@@ -47,8 +47,9 @@ function findViewedScene() {
 }
 
 function suppressCoreScrollingText() {
+  // 1. Patch Token.prototype._drawScrollingText
   const tokenCls = foundry.canvas?.placeables?.Token ?? globalThis.Token;
-  if (tokenCls && tokenCls.prototype && !tokenCls.prototype._combatNumbersOriginalDrawScrollingText) {
+  if (tokenCls?.prototype && !tokenCls.prototype._combatNumbersOriginalDrawScrollingText) {
     tokenCls.prototype._combatNumbersOriginalDrawScrollingText = tokenCls.prototype._drawScrollingText;
     tokenCls.prototype._drawScrollingText = function (content, options = {}) {
       const hideCore = game.settings.get(Constants.MODULE_NAME, 'hide_core_scrolling_text');
@@ -56,6 +57,32 @@ function suppressCoreScrollingText() {
         return;
       }
       return this._combatNumbersOriginalDrawScrollingText(content, options);
+    };
+  }
+
+  // 2. Patch InterfaceCanvasGroup.prototype.createScrollingText
+  const interfaceCls = foundry.canvas?.groups?.InterfaceCanvasGroup ?? globalThis.InterfaceCanvasGroup;
+  if (interfaceCls?.prototype && !interfaceCls.prototype._combatNumbersOriginalCreateScrollingText) {
+    interfaceCls.prototype._combatNumbersOriginalCreateScrollingText = interfaceCls.prototype.createScrollingText;
+    interfaceCls.prototype.createScrollingText = function (origin, content, options = {}) {
+      const hideCore = game.settings.get(Constants.MODULE_NAME, 'hide_core_scrolling_text');
+      if (hideCore) {
+        return;
+      }
+      return this._combatNumbersOriginalCreateScrollingText(origin, content, options);
+    };
+  }
+}
+
+function suppressCanvasInterfaceScrollingText() {
+  if (canvas?.interface && !canvas.interface._combatNumbersOriginalCreateScrollingText) {
+    canvas.interface._combatNumbersOriginalCreateScrollingText = canvas.interface.createScrollingText;
+    canvas.interface.createScrollingText = function (origin, content, options = {}) {
+      const hideCore = game.settings.get(Constants.MODULE_NAME, 'hide_core_scrolling_text');
+      if (hideCore) {
+        return;
+      }
+      return this._combatNumbersOriginalCreateScrollingText(origin, content, options);
     };
   }
 }
@@ -82,8 +109,10 @@ Hooks.once('init', async () => {
  * This happens every time a scene change takes place.
  */
 Hooks.on('canvasReady', async () => {
+  suppressCanvasInterfaceScrollingText();
+
   const layer = canvas.combatNumbers
-    || canvas.layers.find((targetLayer) => targetLayer instanceof CombatNumberLayer);
+    || canvas.layers?.find((targetLayer) => targetLayer instanceof CombatNumberLayer);
 
   const scene = canvas.scene;
   if (!scene) return;
