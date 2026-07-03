@@ -19,6 +19,7 @@ import Appearance from './module/Appearance.js';
 import CombatNumbersApi from './external/CombatNumbersApi.js';
 import Masking from './module/Masking.js';
 import Constants from './module/Constants.js';
+import { log } from './lib/logger.js';
 
 let renderer;
 let socketController;
@@ -49,7 +50,7 @@ function findViewedScene() {
 /* Initialize module                    */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
-  console.log('combat-numbers | Initializing combat-numbers for Foundry VTT v13+');
+  log.info('Initializing combat-numbers for Foundry VTT v13+');
 
   // Register custom module settings.
   registerSettings();
@@ -155,7 +156,7 @@ Hooks.on('preUpdateToken', (tokenDoc, delta) => {
 
     const origActor = game.actors.get(actorId);
     if (!origActor) {
-      console.warn('combat-numbers | Cannot find associated actor to token');
+      log.warn('Cannot find associated actor to token');
       return;
     }
 

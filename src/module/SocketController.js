@@ -1,4 +1,4 @@
-/* eslint no-console: ["error", { allow: ['warn', 'log', 'debug'] }] */
+import { log } from '../lib/logger.js';
 
 /**
  * A controller for handling socket related operations for our module.
@@ -107,7 +107,7 @@ export default class SocketController {
       return;
     }
 
-    console.debug(`combat-numbers | Emitting to ${this.socketName}`);
+    log.debug(`Emitting to ${this.socketName}`);
 
     this.socket.emit(
       this.socketName,
@@ -129,7 +129,7 @@ export default class SocketController {
    */
   async _listen() {
     this.socket.on(this.socketName, async (data) => {
-      console.debug(`combat-numbers | Emission received on ${this.socketName}`);
+      log.debug(`Emission received on ${this.socketName}`);
 
       if (!this._shouldShowInScene(data.sceneId)) {
         return;
