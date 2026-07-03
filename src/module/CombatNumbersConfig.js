@@ -21,8 +21,8 @@ export default class CombatNumbersConfig extends FormApplication {
       title: localize('COMBATNUMBERS.SETTINGS.configTitle', 'Configure Appearance'),
       id: 'combat-numbers-config',
       template: 'modules/combat-numbers/src/templates/config.html',
-      width: 500,
-      height: 588,
+      width: 540,
+      height: 'auto',
       closeOnSubmit: true,
     });
   }
@@ -109,7 +109,6 @@ export default class CombatNumbersConfig extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Set up the form with the current settings values.
     const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance');
     const fontKey = this._getFontKeyByName(appearance.font);
 
@@ -125,27 +124,123 @@ export default class CombatNumbersConfig extends FormApplication {
 
     const fontOtherName = this.fontOther;
 
-    html.find('select[name="font"]').change(function () {
-      const optionName = jQuery(this).find('option:selected').text();
-
+    html.find('select[name="font"]').change((e) => {
+      const optionName = jQuery(e.currentTarget).find('option:selected').text();
       if (optionName !== fontOtherName) {
         fontOther.val('');
         fontOtherFormGroup.hide();
-        return;
+      } else {
+        fontOtherFormGroup.show();
       }
-
-      fontOtherFormGroup.show();
+      this.updatePreview(html);
     });
 
-    const fontSize = appearance?.fontSize
-      ? appearance.fontSize
-      : CombatNumbersConfig.DEFAULT_APPEARANCE.fontSize;
+    // Synchronize color text inputs and color pickers
+    const syncColorPair = (textInput, pickerInput) => {
+      textInput.on('input change', () => {
+        pickerInput.val(textInput.val());
+        this.updatePreview(html);
+      });
+      pickerInput.on('input change', () => {
+        textInput.val(pickerInput.val());
+        this.updatePreview(html);
+      });
+    };
 
-    html.find('select[name="fontSize"]').val(fontSize);
+    syncColorPair(html.find('#cnDamageColorInput'), html.find('#cnDamageColorPicker'));
+    syncColorPair(html.find('#cnHealColorInput'), html.find('#cnHealColorPicker'));
+    syncColorPair(html.find('#cnStrokeColorInput'), html.find('#cnStrokeColorPicker'));
+    syncColorPair(html.find('#cnDropShadowColorInput'), html.find('#cnDropShadowColorPicker'));
+
+    // Range slider value displays
+    html.find('#cnStrokeThicknessRange').on('input change', (e) => {
+      html.find('#cnStrokeThicknessValue').text(e.currentTarget.value);
+      this.updatePreview(html);
+    });
+
+    html.find('#cnDropShadowAlphaRange').on('input change', (e) => {
+      html.find('#cnDropShadowAlphaValue').text(e.currentTarget.value);
+      this.updatePreview(html);
+    });
+
+    // Other inputs triggering preview update
+    html.find('#cnFontSizeSelect, #cnBoldToggle, #cnItalicToggle, #fontOther').on('input change', () => {
+      this.updatePreview(html);
+    });
 
     html.find('button[name="reset"]').click(() => {
       this.reset(html);
     });
+
+    // Initial preview render
+    this.updatePreview(html);
+  }
+
+  /**
+   * Update the live preview stage with current form values.
+   *
+   * @param {jQuery} html
+   */
+  updatePreview(html) {
+    const selectedFontKey = parseInt(html.find('select[name="font"]').val(), 10);
+    const font = this._getSelectedFont(selectedFontKey, {
+      fontOther: html.find('#fontOther').val(),
+    });
+
+    const fontSizeKey = html.find('select[name="fontSize"]').val();
+    const fontSizeMap = {
+      xsmall: 18,
+      small: 24,
+      medium: 32,
+      large: 42,
+      xlarge: 54,
+    };
+    const fontSize = fontSizeMap[fontSizeKey] || 32;
+
+    const bold = html.find('#cnBoldToggle').is(':checked');
+    const italic = html.find('#cnItalicToggle').is(':checked');
+
+    const damageColor = html.find('#cnDamageColorInput').val() || '#ffffff';
+    const healColor = html.find('#cnHealColorInput').val() || '#95ed98';
+
+    const strokeColor = html.find('#cnStrokeColorInput').val() || '#000000';
+    const strokeThickness = parseFloat(html.find('#cnStrokeThicknessRange').val()) || 0;
+
+    const dropShadowColor = html.find('#cnDropShadowColorInput').val() || '#000000';
+    const dropShadowAlpha = parseFloat(html.find('#cnDropShadowAlphaRange').val()) ?? 1;
+
+    const textShadow = (dropShadowAlpha > 0)
+      ? `2px 2px 4px rgba(${this._hexToRgb(dropShadowColor)}, ${dropShadowAlpha})`
+      : 'none';
+
+    const strokeStyle = (strokeThickness > 0)
+      ? `-webkit-text-stroke: ${strokeThickness * 0.5}px ${strokeColor}; paint-order: stroke fill;`
+      : '-webkit-text-stroke: none;';
+
+    const baseStyle = `
+      font-family: '${font}', sans-serif;
+      font-size: ${fontSize}px;
+      font-weight: ${bold ? 'bold' : 'normal'};
+      font-style: ${italic ? 'italic' : 'normal'};
+      text-shadow: ${textShadow};
+      ${strokeStyle}
+    `;
+
+    html.find('#cnPreviewDamage').attr('style', `${baseStyle} color: ${damageColor};`);
+    html.find('#cnPreviewHeal').attr('style', `${baseStyle} color: ${healColor};`);
+  }
+
+  /**
+   * Convert hex color to comma-separated RGB values for rgba text-shadow.
+   *
+   * @param {string} hex
+   * @return {string}
+   * @private
+   */
+  _hexToRgb(hex) {
+    const cleanHex = hex.replace('#', '');
+    const num = parseInt(cleanHex.length === 3 ? cleanHex.split('').map((c) => c + c).join('') : cleanHex, 16);
+    return `${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}`;
   }
 
   /** @override */
@@ -187,20 +282,25 @@ export default class CombatNumbersConfig extends FormApplication {
     html.find('.form-group-font-other').hide();
     html.find('#fontOther').val('');
     html.find('select[name="fontSize"]').val(defaultAppearance.fontSize);
-    html.find('input[name="bold"]').prop('checked', defaultAppearance.bold);
-    html.find('input[name="italic"]').prop('checked', defaultAppearance.italic);
-    html.find('input[name="damageColor"]').val(defaultAppearance.damageColor);
-    html.find('input[name="damageColorSelector"]').val(defaultAppearance.damageColor);
-    html.find('input[name="healColor"]').val(defaultAppearance.healColor);
-    html.find('input[name="healColorSelector"]').val(defaultAppearance.healColor);
-    html.find('input[name="strokeColor"]').val(defaultAppearance.strokeColor);
-    html.find('input[name="strokeColorSelector"]').val(defaultAppearance.strokeColor);
-    html.find('input[name="strokeThickness"]').val(defaultAppearance.strokeThickness);
-    html.find('.form-group-stroke-thickness .range-value').html(defaultAppearance.strokeThickness);
-    html.find('input[name="dropShadowColor"]').val(defaultAppearance.dropShadowColor);
-    html.find('input[name="dropShadowColorSelector"]').val(defaultAppearance.dropShadowColor);
-    html.find('input[name="dropShadowAlpha"]').val(defaultAppearance.dropShadowAlpha);
-    html.find('.form-group-drop-shadow-alpha .range-value').html(defaultAppearance.dropShadowAlpha);
+    html.find('#cnBoldToggle').prop('checked', defaultAppearance.bold);
+    html.find('#cnItalicToggle').prop('checked', defaultAppearance.italic);
+
+    html.find('#cnDamageColorInput').val(defaultAppearance.damageColor);
+    html.find('#cnDamageColorPicker').val(defaultAppearance.damageColor);
+    html.find('#cnHealColorInput').val(defaultAppearance.healColor);
+    html.find('#cnHealColorPicker').val(defaultAppearance.healColor);
+
+    html.find('#cnStrokeColorInput').val(defaultAppearance.strokeColor);
+    html.find('#cnStrokeColorPicker').val(defaultAppearance.strokeColor);
+    html.find('#cnStrokeThicknessRange').val(defaultAppearance.strokeThickness);
+    html.find('#cnStrokeThicknessValue').text(defaultAppearance.strokeThickness);
+
+    html.find('#cnDropShadowColorInput').val(defaultAppearance.dropShadowColor);
+    html.find('#cnDropShadowColorPicker').val(defaultAppearance.dropShadowColor);
+    html.find('#cnDropShadowAlphaRange').val(defaultAppearance.dropShadowAlpha);
+    html.find('#cnDropShadowAlphaValue').text(defaultAppearance.dropShadowAlpha);
+
+    this.updatePreview(html);
   }
 
   /**
