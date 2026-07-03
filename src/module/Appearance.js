@@ -111,19 +111,15 @@ export default class Appearance {
     };
 
     if (this.strokeThickness > 0) {
-      baseTextStyle.stroke = {
-        color: this.stroke,
-        width: this.strokeThickness,
-      };
+      baseTextStyle.stroke = this.stroke;
+      baseTextStyle.strokeThickness = this.strokeThickness;
     }
 
     if (this.dropShadow) {
-      baseTextStyle.dropShadow = {
-        color: this.dropShadowColor,
-        alpha: this.dropShadowAlpha,
-        blur: 2,
-        distance: 2,
-      };
+      baseTextStyle.dropShadow = true;
+      baseTextStyle.dropShadowColor = this.dropShadowColor;
+      baseTextStyle.dropShadowAlpha = this.dropShadowAlpha;
+      baseTextStyle.dropShadowDistance = 2;
     }
 
     return baseTextStyle;
