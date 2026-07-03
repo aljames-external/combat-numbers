@@ -1,7 +1,28 @@
+import { MODULE_ID } from '../constants.js';
+import { log } from '../lib/logger.js';
 import Constants from './Constants.js';
 import CombatNumbersConfig from './CombatNumbersConfig.js';
 
 export default () => {
+  // Register Log Verbosity Setting
+  game.settings.register(MODULE_ID, 'logVerbosity', {
+    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityName'),
+    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityHint'),
+    scope: 'client',
+    config: true,
+    type: String,
+    default: 'warn',
+    choices: {
+      error: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityError'),
+      warn: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityWarn'),
+      info: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityInfo'),
+      debug: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityDebug'),
+    },
+    onChange: (value) => {
+      log.setVerbosity(value);
+    },
+  });
+
   const dispositionChoices = {};
   dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE] = game.i18n.localize(
     'COMBATNUMBERS.SETTINGS.maskDispositionChoiceHostile',
