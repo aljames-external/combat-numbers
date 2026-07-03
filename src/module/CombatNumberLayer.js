@@ -1,5 +1,4 @@
 /* global CanvasLayer */
-/* global mergeObject */
 
 /**
  * Module-specific layer which we can render combat numbers on.
@@ -11,7 +10,8 @@ export default class CombatNumberLayer extends CanvasLayer {
    * @return {*}
    */
   static get layerOptions() {
-    return mergeObject(super.layerOptions, {
+    return foundry.utils.mergeObject(super.layerOptions, {
+      name: 'combatNumbers',
       canDragCreate: false,
       // This will set the combat numbers above the effects layer, but below
       // the controls layer.

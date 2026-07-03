@@ -120,14 +120,20 @@ export default class Renderer {
    * @private
    */
   async _render(text, stylizerType, x, y) {
+    if (!this.layer) {
+      this.layer = canvas.combatNumbers || canvas.layers?.get('combatNumbers');
+    }
+
     const amountStylizer = new AmountStylizer(text, this.appearance);
     const dmgNum = amountStylizer.stylize(stylizerType);
 
     // Ensure we're anchoring to the center of the token.
-    dmgNum.anchor.set(0.5);
+    if (dmgNum.anchor) {
+      dmgNum.anchor.set(0.5);
+    }
     dmgNum.position.x = x;
     dmgNum.position.y = y;
-    dmgNum.name = Math.random().toString(36).substring(16);
+    dmgNum.name = Math.random().toString(36).substring(2);
 
     // Add a "wait" time if our settings dictate to wait until this is complete.
     await new Promise(
@@ -138,14 +144,14 @@ export default class Renderer {
 
     const anim1 = ease.add(
       child,
-      { x: child.transform.position.x, y: child.transform.position.y + -25 },
+      { x: child.position.x, y: child.position.y - 25 },
       { duration: 100 },
     );
 
     anim1.once('complete', () => {
       const anim2 = ease.add(
         child,
-        { x: child.transform.position.x, y: child.transform.position.y + 40 },
+        { x: child.position.x, y: child.position.y + 40 },
         { duration: 50 },
       );
 

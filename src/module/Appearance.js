@@ -56,8 +56,7 @@ export default class Appearance {
       ? defaults.strokeThickness
       : Number(appearanceSettings.strokeThickness);
 
-    // Ensure that the user hasn't turned off drop shadow via the alpha
-    // setting.
+    // Ensure that the user hasn't turned off drop shadow via the alpha setting.
     if (
       appearanceSettings?.dropShadowAlpha === undefined
       || Number(appearanceSettings.dropShadowAlpha) !== 0
@@ -80,9 +79,7 @@ export default class Appearance {
   getHealTextStyle() {
     return {
       ...this._getBaseTextStyle(),
-      ...{
-        fill: this.healColor,
-      },
+      fill: this.healColor,
     };
   }
 
@@ -94,9 +91,7 @@ export default class Appearance {
   getDamageTextStyle() {
     return {
       ...this._getBaseTextStyle(),
-      ...{
-        fill: this.damageColor,
-      },
+      fill: this.damageColor,
     };
   }
 
@@ -113,14 +108,22 @@ export default class Appearance {
       fontSize: this._getFontSizeForTextStyle(),
       fontWeight: this.fontWeight,
       fontStyle: this.fontStyle,
-      stroke: this.stroke,
-      strokeThickness: this.strokeThickness,
     };
 
+    if (this.strokeThickness > 0) {
+      baseTextStyle.stroke = {
+        color: this.stroke,
+        width: this.strokeThickness,
+      };
+    }
+
     if (this.dropShadow) {
-      baseTextStyle.dropShadow = this.dropShadow;
-      baseTextStyle.dropShadowColor = this.dropShadowColor;
-      baseTextStyle.dropShadowAlpha = this.dropShadowAlpha;
+      baseTextStyle.dropShadow = {
+        color: this.dropShadowColor,
+        alpha: this.dropShadowAlpha,
+        blur: 2,
+        distance: 2,
+      };
     }
 
     return baseTextStyle;

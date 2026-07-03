@@ -30,13 +30,13 @@ export default class ControlsGenerator {
     controls.push({
       name: 'combatNumbers',
       title: 'COMBATNUMBERS.CONTROLS.title',
-      icon: 'fas fa-hashtag',
+      icon: 'fa-solid fa-hashtag',
       layer: 'combatNumbers',
       tools: [
         {
           name: 'pause-broadcast',
           title: 'COMBATNUMBERS.CONTROLS.TOOLS.pauseBroadcast',
-          icon: 'fas fa-pause-circle',
+          icon: 'fa-solid fa-circle-pause',
           active: this.state.getIsPauseBroadcast(),
           toggle: true,
           onClick: () => {
@@ -48,7 +48,7 @@ export default class ControlsGenerator {
         {
           name: 'mask',
           title: 'COMBATNUMBERS.CONTROLS.TOOLS.mask',
-          icon: 'fas fa-mask',
+          icon: 'fa-solid fa-mask',
           active: this.state.getIsMask(),
           toggle: true,
           onClick: () => {

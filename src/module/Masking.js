@@ -11,10 +11,10 @@ export default class Masking {
       return false;
     }
 
-    const { disposition } = token.data;
+    const disposition = token.document?.disposition ?? token.disposition ?? CONST.TOKEN_DISPOSITIONS.NEUTRAL;
 
     // If we have a hostile disposition, it will always be masked regardless of settings.
-    if (disposition === global.CONST.TOKEN_DISPOSITIONS.HOSTILE) {
+    if (disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE) {
       return true;
     }
 
@@ -26,16 +26,15 @@ export default class Masking {
 
     // If we have a neutral disposition, mask both neutral and hostile.
     if (
-      disposition === global.CONST.TOKEN_DISPOSITIONS.NEUTRAL
+      disposition === CONST.TOKEN_DISPOSITIONS.NEUTRAL
       && [choices.HOSTILE_NETURAL_FRIENDLY, choices.HOSTILE_NEUTRAL].includes(dispositionsAllowed)
     ) {
       return true;
     }
 
-    // If we have a hostile disposition set along with only hostile tokens to be masked, mask the
-    // token.
+    // If we have a friendly disposition set along with only hostile tokens to be masked, mask the token.
     if (
-      disposition === global.CONST.TOKEN_DISPOSITIONS.FRIENDLY
+      disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY
       && dispositionsAllowed === choices.HOSTILE_NETURAL_FRIENDLY
     ) {
       return true;

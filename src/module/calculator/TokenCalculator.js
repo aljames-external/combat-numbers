@@ -10,33 +10,31 @@ export default class TokenCalculator extends AbstractCalculator {
    *
    * If not, we should be coordinating using the relevant Actor instead.
    *
-   * @param token
-   *   The Token Entity to check.
+   * @param tokenDoc
+   *   The Token Document or Token entity to check.
    *
    * @return {boolean}
    *   If we should use Actor coordination instead.
    */
-  shouldUseActorCoordination(token) {
-    const hpObjectPath = this._getOrigEntityHpPath();
-
-    return (
-      _.get(token, hpObjectPath, null) === null
-    );
+  shouldUseActorCoordination(tokenDoc) {
+    const hpObjectPath = this.hpObjectPathFinder.getHpPath();
+    const actorSystem = tokenDoc?.actor?.system || tokenDoc?.delta?.system;
+    return !actorSystem || !_.has(actorSystem, hpObjectPath);
   }
 
   _getOrigEntityHpPath() {
-    return `actorData.system.${this.hpObjectPathFinder.getHpPath()}`;
+    return `actor.system.${this.hpObjectPathFinder.getHpPath()}`;
   }
 
   _getOrigEntityHpTempPath() {
-    return `actorData.system.${this.hpObjectPathFinder.getHpTempPath()}`;
+    return `actor.system.${this.hpObjectPathFinder.getHpTempPath()}`;
   }
 
   _getChangedEntityHpPath() {
-    return `actorData.system.${this.hpObjectPathFinder.getHpPath()}`;
+    return `actor.system.${this.hpObjectPathFinder.getHpPath()}`;
   }
 
   _getChangedEntityHpTempPath() {
-    return `actorData.system.${this.hpObjectPathFinder.getHpTempPath()}`;
+    return `actor.system.${this.hpObjectPathFinder.getHpTempPath()}`;
   }
 }
