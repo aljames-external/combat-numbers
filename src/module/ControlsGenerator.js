@@ -15,8 +15,8 @@ export default class ControlsGenerator {
   /**
    * Generate the toolbar controls.
    *
-   * @param {Object} controls
-   *   The game's controls object.
+   * @param {Object|Array} controls
+   *   The game's controls object or array.
    * @param {Boolean} isGm
    *   If the current user is a GM.
    * @param {Boolean} showControls
@@ -27,7 +27,7 @@ export default class ControlsGenerator {
       return;
     }
 
-    controls.push({
+    const controlGroup = {
       name: 'combatNumbers',
       title: 'COMBATNUMBERS.CONTROLS.title',
       icon: 'fa-solid fa-hashtag',
@@ -58,6 +58,16 @@ export default class ControlsGenerator {
           },
         },
       ],
-    });
+    };
+
+    if (Array.isArray(controls)) {
+      controls.push(controlGroup);
+    } else if (Array.isArray(controls?.controls)) {
+      controls.controls.push(controlGroup);
+    } else if (controls && typeof controls.push === 'function') {
+      controls.push(controlGroup);
+    } else if (controls && typeof controls === 'object') {
+      controls.combatNumbers = controlGroup;
+    }
   }
 }
