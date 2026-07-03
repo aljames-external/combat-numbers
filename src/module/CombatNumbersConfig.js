@@ -1,7 +1,7 @@
 /* global FormApplication */
-/* global game */
 /* global jQuery */
 
+import { localize } from '../lib/utils.js';
 import Constants from './Constants.js';
 
 /**
@@ -12,13 +12,13 @@ import Constants from './Constants.js';
 export default class CombatNumbersConfig extends FormApplication {
   constructor(object = {}, options = {}) {
     super(object, options);
-    this.fontOther = game.i18n.localize('COMBATNUMBERS.SETTINGS.fontFamilyOther');
+    this.fontOther = localize('COMBATNUMBERS.SETTINGS.fontFamilyOther', 'Other');
   }
 
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      title: game.i18n.localize('COMBATNUMBERS.SETTINGS.configTitle'),
+      title: localize('COMBATNUMBERS.SETTINGS.configTitle', 'Configure Appearance'),
       id: 'combat-numbers-config',
       template: 'modules/combat-numbers/src/templates/config.html',
       width: 500,
@@ -76,11 +76,11 @@ export default class CombatNumbersConfig extends FormApplication {
    */
   static get FONT_SIZES() {
     return {
-      xsmall: game.i18n.localize('COMBATNUMBERS.SETTINGS.fontSizeXSmall'),
-      small: game.i18n.localize('COMBATNUMBERS.SETTINGS.fontSizeSmall'),
-      medium: game.i18n.localize('COMBATNUMBERS.SETTINGS.fontSizeMedium'),
-      large: game.i18n.localize('COMBATNUMBERS.SETTINGS.fontSizeLarge'),
-      xlarge: game.i18n.localize('COMBATNUMBERS.SETTINGS.fontSizeXLarge'),
+      xsmall: localize('COMBATNUMBERS.SETTINGS.fontSizeXSmall', 'Extra Small'),
+      small: localize('COMBATNUMBERS.SETTINGS.fontSizeSmall', 'Small'),
+      medium: localize('COMBATNUMBERS.SETTINGS.fontSizeMedium', 'Medium'),
+      large: localize('COMBATNUMBERS.SETTINGS.fontSizeLarge', 'Large'),
+      xlarge: localize('COMBATNUMBERS.SETTINGS.fontSizeXLarge', 'Extra Large'),
     };
   }
 

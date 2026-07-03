@@ -1,22 +1,23 @@
 import { MODULE_ID } from '../constants.js';
 import { log } from '../lib/logger.js';
+import { localize } from '../lib/utils.js';
 import Constants from './Constants.js';
 import CombatNumbersConfig from './CombatNumbersConfig.js';
 
 export default () => {
   // Register Log Verbosity Setting
   game.settings.register(MODULE_ID, 'logVerbosity', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.logVerbosityName', 'Log Verbosity'),
+    hint: localize('COMBATNUMBERS.SETTINGS.logVerbosityHint', 'Control the level of logging output in the browser developer console.'),
     scope: 'client',
     config: true,
     type: String,
     default: 'warn',
     choices: {
-      error: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityError'),
-      warn: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityWarn'),
-      info: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityInfo'),
-      debug: game.i18n.localize('COMBATNUMBERS.SETTINGS.logVerbosityDebug'),
+      error: localize('COMBATNUMBERS.SETTINGS.logVerbosityError', 'Errors Only'),
+      warn: localize('COMBATNUMBERS.SETTINGS.logVerbosityWarn', 'Warnings & Errors'),
+      info: localize('COMBATNUMBERS.SETTINGS.logVerbosityInfo', 'Info, Warnings & Errors'),
+      debug: localize('COMBATNUMBERS.SETTINGS.logVerbosityDebug', 'Debug (Verbose)'),
     },
     onChange: (value) => {
       log.setVerbosity(value);
@@ -24,14 +25,17 @@ export default () => {
   });
 
   const dispositionChoices = {};
-  dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE] = game.i18n.localize(
+  dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE] = localize(
     'COMBATNUMBERS.SETTINGS.maskDispositionChoiceHostile',
+    'Hostile',
   );
-  dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE_NEUTRAL] = game.i18n.localize(
+  dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE_NEUTRAL] = localize(
     'COMBATNUMBERS.SETTINGS.maskDispositionChoiceHostileNeutral',
+    'Hostile, Neutral',
   );
-  dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE_NETURAL_FRIENDLY] = game.i18n.localize(
+  dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE_NETURAL_FRIENDLY] = localize(
     'COMBATNUMBERS.SETTINGS.maskDispositionChoiceHostileNeutralFriendly',
+    'Hostile, Neutral, Friendly',
   );
 
   // The Appearance settings menu and settings entry...
@@ -59,8 +63,8 @@ export default () => {
 
   // All other normal settings...
   game.settings.register(Constants.MODULE_NAME, 'wait_time', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.waitTimeName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.waitTimeHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.waitTimeName', 'Wait Time'),
+    hint: localize('COMBATNUMBERS.SETTINGS.waitTimeHint', 'The amount of time (in seconds) between an HP change and displaying the Combat Numbers.'),
     scope: 'world',
     config: true,
     range: { min: 0, max: 10, step: 0.5 },
@@ -68,8 +72,8 @@ export default () => {
     type: Number,
   });
   game.settings.register(Constants.MODULE_NAME, 'linger_time', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.lingerTimeName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.lingerTimeHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.lingerTimeName', 'Linger Time'),
+    hint: localize('COMBATNUMBERS.SETTINGS.lingerTimeHint', 'The amount of time (in seconds) for the Combat Numbers to linger on the screen after being displayed.'),
     scope: 'world',
     config: true,
     range: { min: 0, max: 10, step: 0.5 },
@@ -77,8 +81,8 @@ export default () => {
     type: Number,
   });
   game.settings.register(Constants.MODULE_NAME, 'show_controls', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.showControlsName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.showControlsHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.showControlsName', 'Show Canvas Layer Controls'),
+    hint: localize('COMBATNUMBERS.SETTINGS.showControlsHint', 'Shows the Canvas Layers Controls button and its tools.'),
     scope: 'world',
     config: true,
     default: true,
@@ -86,24 +90,24 @@ export default () => {
     onChange: () => window.location.reload(),
   });
   game.settings.register(Constants.MODULE_NAME, 'show_modifiers', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.showModifiersName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.showModifiersHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.showModifiersName', 'Show Addition / Subtraction Modifiers'),
+    hint: localize('COMBATNUMBERS.SETTINGS.showModifiersHint', 'Shows a "-" in front of a Combat Number when damage is dealt, or shows a "+" when healed.'),
     scope: 'client',
     config: true,
     default: false,
     type: Boolean,
   });
   game.settings.register(Constants.MODULE_NAME, 'mask_default', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.maskDefaultName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.maskDefaultHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.maskDefaultName', 'Mask Default State'),
+    hint: localize('COMBATNUMBERS.SETTINGS.maskDefaultHint', 'The default state of the masking toggle.'),
     scope: 'world',
     config: true,
     default: false,
     type: Boolean,
   });
   game.settings.register(Constants.MODULE_NAME, 'mask_disposition', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.maskDispositionName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.maskDispositionHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.maskDispositionName', 'Masked Token Disposition Types'),
+    hint: localize('COMBATNUMBERS.SETTINGS.maskDispositionHint', 'The tokens that will be masked when masking is turned on.'),
     scope: 'world',
     config: true,
     default: Constants.MASKED_DISPOSITION_CHOICES.HOSTILE,
@@ -111,32 +115,32 @@ export default () => {
     choices: dispositionChoices,
   });
   game.settings.register(Constants.MODULE_NAME, 'mask_damage', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.maskDamage'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.maskDamageHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.maskDamage', 'Mask Damage Text'),
+    hint: localize('COMBATNUMBERS.SETTINGS.maskDamageHint', 'When masking is on, this text will display for damage.'),
     scope: 'client',
     config: true,
     default: 'Hit',
     type: String,
   });
   game.settings.register(Constants.MODULE_NAME, 'mask_heal', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.maskHeal'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.maskHealHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.maskHeal', 'Mask Heal Text'),
+    hint: localize('COMBATNUMBERS.SETTINGS.maskHealHint', 'When masking is on, this text will display for healing.'),
     scope: 'client',
     config: true,
     default: 'Healed',
     type: String,
   });
   game.settings.register(Constants.MODULE_NAME, 'hp_object_path', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.hpObjectPathName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.hpObjectPathHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.hpObjectPathName', 'HP Object Path'),
+    hint: localize('COMBATNUMBERS.SETTINGS.hpObjectPathHint', 'Object path to locate the HP attribute.'),
     scope: 'world',
     config: true,
     default: '',
     type: String,
   });
   game.settings.register(Constants.MODULE_NAME, 'temp_hp_object_path', {
-    name: game.i18n.localize('COMBATNUMBERS.SETTINGS.tempHpObjectPathName'),
-    hint: game.i18n.localize('COMBATNUMBERS.SETTINGS.tempHpObjectPathHint'),
+    name: localize('COMBATNUMBERS.SETTINGS.tempHpObjectPathName', 'Temporary HP Object Path'),
+    hint: localize('COMBATNUMBERS.SETTINGS.tempHpObjectPathHint', 'Object path referencing temporary HP.'),
     scope: 'world',
     config: true,
     default: '',
