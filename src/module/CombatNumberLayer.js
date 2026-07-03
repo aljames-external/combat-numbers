@@ -1,4 +1,4 @@
-/* global CanvasLayer */
+import { CanvasLayer } from '../lib/compat.js';
 
 /**
  * Module-specific layer which we can render combat numbers on.
