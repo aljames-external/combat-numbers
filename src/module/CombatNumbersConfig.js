@@ -1,7 +1,6 @@
 import { localize } from '../lib/utils.js';
+import { ApplicationV2, HandlebarsApplicationMixin } from '../lib/compat.js';
 import Constants from './Constants.js';
-
-const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
  * ApplicationV2 form to configure appearance settings of Combat Numbers.
