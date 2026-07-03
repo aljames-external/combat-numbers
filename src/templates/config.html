@@ -33,13 +33,15 @@
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-font"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-font"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.labelFontFamily"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.labelFontFamily"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <select name="font" id="cnFontSelect">
                         {{{selectOptions fontList selected=font}}}
                     </select>
@@ -47,26 +49,30 @@
             </div>
 
             <div class="cn-module-card form-group-font-other" style="display: none;">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-pen-field"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-pen-field"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.labelFontFamilyOther"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.labelFontFamilyOther"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <input type="text" id="fontOther" name="fontOther" value="{{fontOther}}">
                 </div>
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-text-height"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-text-height"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.labelFontSize"}}</span>
+                        <span class="cn-card-hint">{{localize "COMBATNUMBERS.SETTINGS.fontSizeHint"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.labelFontSize"}}</h3>
-                    <p class="cn-card-hint">{{localize "COMBATNUMBERS.SETTINGS.fontSizeHint"}}</p>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <select name="fontSize" id="cnFontSizeSelect">
                         {{{selectOptions fontSizeList selected=fontSize}}}
                     </select>
@@ -74,13 +80,15 @@
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-bold"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-bold"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.bold"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.bold"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <label class="cn-switch">
                         <input type="checkbox" name="bold" id="cnBoldToggle" {{checked bold}} />
                         <span class="cn-slider"></span>
@@ -89,13 +97,15 @@
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-italic"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-italic"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.italic"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.italic"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <label class="cn-switch">
                         <input type="checkbox" name="italic" id="cnItalicToggle" {{checked italic}} />
                         <span class="cn-slider"></span>
@@ -110,26 +120,30 @@
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-heart-crack"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-heart-crack"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.damageColorLabel"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.damageColorLabel"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <input type="text" name="damageColor" id="cnDamageColorInput" value="{{damageColor}}" />
                     <input type="color" name="damageColorSelector" id="cnDamageColorPicker" value="{{damageColor}}" />
                 </div>
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-heart-pulse"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.healColorLabel"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.healColorLabel"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <input type="text" name="healColor" id="cnHealColorInput" value="{{healColor}}" />
                     <input type="color" name="healColorSelector" id="cnHealColorPicker" value="{{healColor}}" />
                 </div>
@@ -142,26 +156,30 @@
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-border-all"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-border-all"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.strokeColorLabel"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.strokeColorLabel"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <input type="text" name="strokeColor" id="cnStrokeColorInput" value="{{strokeColor}}" />
                     <input type="color" name="strokeColorSelector" id="cnStrokeColorPicker" value="{{strokeColor}}" />
                 </div>
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-ruler-combined"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-ruler-combined"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.strokeThicknessLabel"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.strokeThicknessLabel"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <input type="range" name="strokeThickness" id="cnStrokeThicknessRange" value="{{strokeThickness}}" min="0" max="10" step="0.5">
                     <span class="range-value" id="cnStrokeThicknessValue">{{strokeThickness}}</span>
                 </div>
@@ -174,27 +192,31 @@
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-droplet"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.dropShadowColorLabel"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.dropShadowColorLabel"}}</h3>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <input type="text" name="dropShadowColor" id="cnDropShadowColorInput" value="{{dropShadowColor}}" />
                     <input type="color" name="dropShadowColorSelector" id="cnDropShadowColorPicker" value="{{dropShadowColor}}" />
                 </div>
             </div>
 
             <div class="cn-module-card">
-                <div class="cn-card-icon-wrapper">
-                    <i class="fa-solid fa-circle-half-stroke"></i>
+                <div class="cn-card-left">
+                    <div class="cn-card-icon-wrapper">
+                        <i class="fa-solid fa-circle-half-stroke"></i>
+                    </div>
+                    <div class="cn-card-details">
+                        <span class="cn-card-title">{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaLabel"}}</span>
+                        <span class="cn-card-hint">{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaHint"}}</span>
+                    </div>
                 </div>
-                <div class="cn-card-content">
-                    <h3 class="cn-card-label">{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaLabel"}}</h3>
-                    <p class="cn-card-hint">{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaHint"}}</p>
-                </div>
-                <div class="cn-card-control">
+                <div class="cn-card-right">
                     <input type="range" name="dropShadowAlpha" id="cnDropShadowAlphaRange" value="{{dropShadowAlpha}}" min="0" max="1" step="0.05">
                     <span class="range-value" id="cnDropShadowAlphaValue">{{dropShadowAlpha}}</span>
                 </div>
