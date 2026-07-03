@@ -9,7 +9,8 @@
       "name": "1000Nettles"
     },
     {
-      "name": "Bakana"
+      "name": "Bakana",
+      "url": "https://github.com/aljames-arctic"
     }
   ],
   "languages": [
@@ -35,10 +36,10 @@
     }
   ],
   "esmodules": [
-    "src/combat-numbers.js"
+    "src/module.js"
   ],
   "socket": true,
-  "url": "https://github.com/aljames-arctic/combat-numbers",
+  "url": "https://github.com/aljames-external/combat-numbers",
   "license": "MIT",
   "compatibility": {
     "minimum": "13",
