@@ -1,6 +1,6 @@
-import { ease } from 'pixi-ease';
-import AmountStylizer from './AmountStylizer';
-import Constants from './Constants';
+import { ease } from '../lib/ease.js';
+import AmountStylizer from './AmountStylizer.js';
+import Constants from './Constants.js';
 
 /**
  * A Renderer class to handle rendering responsibilities.

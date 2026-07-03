@@ -1,16 +1,7 @@
-import Constants from './Constants';
+import Constants from './Constants.js';
 
 /**
  * A class for finding the HP Object path.
- *
- * This is the path used within the Lodash `get` method for object property
- * retrieval.
- *
- * A Foundry admin can adjust module settings to specify the path.
- *
- * No relation to the PathFinder game system ;)
- *
- * @see https://lodash.com/docs/4.17.15#get
  */
 export default class HpObjectPathFinder {
   constructor(settings) {
@@ -59,7 +50,7 @@ export default class HpObjectPathFinder {
    *   Must be one of "temp" or "hp".
    *
    * @return {string}
-   *   The final, constructed HP object path for use within Lodash `get`.
+   *   The final, constructed HP object path.
    *
    * @private
    */

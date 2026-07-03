@@ -1,6 +1,5 @@
-import _ from 'lodash';
-import Renderer from './Renderer';
-import SocketController from './SocketController';
+import Renderer from './Renderer.js';
+import SocketController from './SocketController.js';
 
 /**
  * Coordinate any Token updates from the Foundry Hook system.
@@ -22,7 +21,7 @@ export default class TokenUpdateCoordinator {
    *   The entity object about to be updated.
    */
   coordinatePreUpdate(entity) {
-    const entityClone = _.cloneDeep(entity);
+    const entityClone = foundry.utils.deepClone(entity);
 
     // Store the update data for later when we see a full update.
     this.queuedUpdates.set(
@@ -67,7 +66,8 @@ export default class TokenUpdateCoordinator {
       return;
     }
 
-    const coords = this.calculator.getCoordinates(tokenDoc.scene, entity);
+    const scene = tokenDoc.scene || canvas.scene;
+    const coords = this.calculator.getCoordinates(scene, entity);
 
     if (this.masking.shouldMaskToken(entity)) {
       const maskedType = (hpDiff < 0)
@@ -80,7 +80,7 @@ export default class TokenUpdateCoordinator {
         SocketController.emitTypes.TYPE_MASKED,
         coords.x,
         coords.y,
-        tokenDoc.scene.id,
+        scene?.id,
       );
     } else {
       this.renderer.processNumericAndRender(hpDiff, coords.x, coords.y);
@@ -89,7 +89,7 @@ export default class TokenUpdateCoordinator {
         SocketController.emitTypes.TYPE_NUMERIC,
         coords.x,
         coords.y,
-        tokenDoc.scene.id,
+        scene?.id,
       );
     }
 

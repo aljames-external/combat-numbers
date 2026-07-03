@@ -1,7 +1,4 @@
-import _ from 'lodash';
-import HpObjectPathFinder from '../HpObjectPathFinder';
-
-/* eslint-disable no-unused-vars */
+import HpObjectPathFinder from '../HpObjectPathFinder.js';
 
 /**
  * Base class used for any Entity calculations.
@@ -37,31 +34,29 @@ export default class AbstractCalculator {
     const changedEntityHpPath = this._getChangedEntityHpPath();
     const changedEntityTempHpPath = this._getChangedEntityHpTempPath();
 
-    // Within original Actor entities, the original entity is prefixed by
-    // another "data".
     const origEntityHpPath = this._getOrigEntityHpPath();
     const origEntityHpTempPath = this._getOrigEntityHpTempPath();
 
     // First, ensure that we even have any HP changes at all.
     if (
-      !_.has(changedEntity, changedEntityHpPath)
-      && !_.has(changedEntity, changedEntityTempHpPath)
+      !foundry.utils.hasProperty(changedEntity, changedEntityHpPath)
+      && !foundry.utils.hasProperty(changedEntity, changedEntityTempHpPath)
     ) {
       throw new ReferenceError('Cannot find any changed HP or HP temp attributes.');
     }
 
     // Secondly, find which part changed in the provided `changedEntity`
     // and return the difference.
-    const rawHpChanged = _.has(changedEntity, changedEntityHpPath);
+    const rawHpChanged = foundry.utils.hasProperty(changedEntity, changedEntityHpPath);
 
     if (rawHpChanged) {
-      return Number(_.get(changedEntity, changedEntityHpPath, 0))
-        - Number(_.get(origEntity, origEntityHpPath, 0));
+      return Number(foundry.utils.getProperty(changedEntity, changedEntityHpPath) ?? 0)
+        - Number(foundry.utils.getProperty(origEntity, origEntityHpPath) ?? 0);
     }
 
     // If we're not using raw HP, we're using temp HP instead.
-    return Number(_.get(changedEntity, changedEntityTempHpPath, 0))
-      - Number(_.get(origEntity, origEntityHpTempPath, 0));
+    return Number(foundry.utils.getProperty(changedEntity, changedEntityTempHpPath) ?? 0)
+      - Number(foundry.utils.getProperty(origEntity, origEntityHpTempPath) ?? 0);
   }
 
   /**
@@ -77,38 +72,12 @@ export default class AbstractCalculator {
    *   numbers.
    */
   getCoordinates(scene, entity) {
-    // Some tokens have a `center` attribute which helps us pinpoint their
-    // exact middle. If it exists, just use it. Otherwise, let's do some
-    // complex calculations...
-    const center = _.get(entity, 'center', null);
-    if (center !== null) {
-      return this._calculateActorTokenCoords(entity);
+    const center = entity?.center || (entity.x !== undefined && entity.y !== undefined ? { x: entity.x + ((entity.width || 1) * scene.grid.size) / 2, y: entity.y + ((entity.height || 1) * scene.grid.size) / 2 } : null);
+    if (center) {
+      return { x: center.x, y: center.y };
     }
 
     return this._calculateRawTokenCoords(scene, entity);
-  }
-
-  /**
-   * Calculate an Actor Token coordinates.
-   *
-   * Tokens attached to Actors should have a `center` attached to them, giving
-   * us an easy way to calculate their coordinates.
-   *
-   * @param actorToken
-   *   The Actor Token entity.
-   *
-   * @return {x, y}
-   *   An object containing the X and Y coordinates.
-   *
-   * @private
-   */
-  _calculateActorTokenCoords(actorToken) {
-    const center = _.get(actorToken, 'center');
-
-    return {
-      x: center.x,
-      y: center.y,
-    };
   }
 
   /**
@@ -127,18 +96,15 @@ export default class AbstractCalculator {
   _calculateRawTokenCoords(scene, token) {
     const coords = {};
 
-    // In order to "center" our numbers, we'll need to get the in-between
-    // based on the grid size.
-    const gridSize = Number(scene.grid.size);
-    const width = Number(token.width) * gridSize;
-    const height = Number(token.height) * gridSize;
+    const gridSize = Number(scene?.grid?.size || 100);
+    const width = Number(token.width || 1) * gridSize;
+    const height = Number(token.height || 1) * gridSize;
 
-    // Take into account the width of the token - some may be larger than 1.
     coords.x = Math.round(
-      token.x + (width / 2),
+      (token.x || 0) + (width / 2),
     );
     coords.y = Math.round(
-      token.y + (height / 2),
+      (token.y || 0) + (height / 2),
     );
 
     return coords;

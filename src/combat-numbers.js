@@ -4,22 +4,21 @@
  * Software License: MIT
  */
 
-import _ from 'lodash';
-import registerSettings from './module/settings';
-import CombatNumberLayer from './module/CombatNumberLayer';
-import Renderer from './module/Renderer';
-import SocketController from './module/SocketController';
-import TokenUpdateCoordinator from './module/TokenUpdateCoordinator';
-import ActorUpdateCoordinator from './module/ActorUpdateCoordinator';
-import TokenCalculator from './module/calculator/TokenCalculator';
-import ActorCalculator from './module/calculator/ActorCalculator';
-import HpObjectPathFinder from './module/HpObjectPathFinder';
-import ControlsGenerator from './module/ControlsGenerator';
-import State from './module/State';
-import Appearance from './module/Appearance';
-import CombatNumbersApi from './external/CombatNumbersApi';
-import Masking from './module/Masking';
-import Constants from './module/Constants';
+import registerSettings from './module/settings.js';
+import CombatNumberLayer from './module/CombatNumberLayer.js';
+import Renderer from './module/Renderer.js';
+import SocketController from './module/SocketController.js';
+import TokenUpdateCoordinator from './module/TokenUpdateCoordinator.js';
+import ActorUpdateCoordinator from './module/ActorUpdateCoordinator.js';
+import TokenCalculator from './module/calculator/TokenCalculator.js';
+import ActorCalculator from './module/calculator/ActorCalculator.js';
+import HpObjectPathFinder from './module/HpObjectPathFinder.js';
+import ControlsGenerator from './module/ControlsGenerator.js';
+import State from './module/State.js';
+import Appearance from './module/Appearance.js';
+import CombatNumbersApi from './external/CombatNumbersApi.js';
+import Masking from './module/Masking.js';
+import Constants from './module/Constants.js';
 
 let renderer;
 let socketController;
@@ -148,9 +147,9 @@ Hooks.on('preUpdateToken', (tokenDoc, delta) => {
 
   if (tokenCalculator.shouldUseActorCoordination(tokenDoc)) {
     const actorId = tokenDoc.actorId;
-    const actorData = _.get(delta, 'actorData', null) || _.get(delta, 'delta', null);
+    const actorData = foundry.utils.getProperty(delta, 'actorData') || foundry.utils.getProperty(delta, 'delta');
 
-    if (actorId === null || actorData === null) {
+    if (!actorId || !actorData) {
       return;
     }
 

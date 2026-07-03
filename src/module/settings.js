@@ -1,8 +1,5 @@
-/* global game */
-/* global window */
-
-import Constants from './Constants';
-import CombatNumbersConfig from './CombatNumbersConfig';
+import Constants from './Constants.js';
+import CombatNumbersConfig from './CombatNumbersConfig.js';
 
 export default () => {
   const dispositionChoices = {};
@@ -12,7 +9,6 @@ export default () => {
   dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE_NEUTRAL] = game.i18n.localize(
     'COMBATNUMBERS.SETTINGS.maskDispositionChoiceHostileNeutral',
   );
-  // eslint-disable-next-line max-len
   dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE_NETURAL_FRIENDLY] = game.i18n.localize(
     'COMBATNUMBERS.SETTINGS.maskDispositionChoiceHostileNeutralFriendly',
   );
@@ -22,7 +18,7 @@ export default () => {
     name: 'COMBATNUMBERS.SETTINGS.configName',
     label: 'COMBATNUMBERS.SETTINGS.configTitle',
     hint: 'COMBATNUMBERS.SETTINGS.configHint',
-    icon: 'fas fa-palette',
+    icon: 'fa-solid fa-palette',
     type: CombatNumbersConfig,
     restricted: true,
   });
@@ -34,8 +30,6 @@ export default () => {
     default: CombatNumbersConfig.DEFAULT_APPEARANCE,
     type: Object,
     onChange: () => {
-      // Wait until the config dialog window has closed, then refresh the
-      // application.
       setTimeout(() => {
         window.location.reload();
       }, 200);

@@ -4,7 +4,14 @@
   "title": "Combat Numbers",
   "description": "Showcase bouncing combat numbers on tokens, similar to old-school JRPGs.",
   "version": "3.0.0",
-  "authors": [],
+  "authors": [
+    {
+      "name": "1000Nettles"
+    },
+    {
+      "name": "Bakana"
+    }
+  ],
   "languages": [
     {
       "lang": "en",
@@ -28,7 +35,7 @@
     }
   ],
   "esmodules": [
-    "combat-numbers.js"
+    "src/combat-numbers.js"
   ],
   "socket": true,
   "url": "https://github.com/aljames-arctic/combat-numbers",

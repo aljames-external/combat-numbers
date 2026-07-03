@@ -1,4 +1,4 @@
-import AbstractCalculator from './AbstractCalculator';
+import AbstractCalculator from './AbstractCalculator.js';
 
 /**
  * Used for any Actor-specific HP calculations.
