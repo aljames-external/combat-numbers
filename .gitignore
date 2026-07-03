@@ -1,6 +1,4 @@
-dist/*
 node_modules
 foundryconfig.json
 .idea
-.idea/*
 .DS_Store
