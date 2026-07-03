@@ -46,6 +46,20 @@ function findViewedScene() {
   return canvas.scene || game.scenes.find((s) => s.isView);
 }
 
+function suppressCoreScrollingText() {
+  const tokenCls = foundry.canvas?.placeables?.Token ?? globalThis.Token;
+  if (tokenCls && tokenCls.prototype && !tokenCls.prototype._combatNumbersOriginalDrawScrollingText) {
+    tokenCls.prototype._combatNumbersOriginalDrawScrollingText = tokenCls.prototype._drawScrollingText;
+    tokenCls.prototype._drawScrollingText = function (content, options = {}) {
+      const hideCore = game.settings.get(Constants.MODULE_NAME, 'hide_core_scrolling_text');
+      if (hideCore) {
+        return;
+      }
+      return this._combatNumbersOriginalDrawScrollingText(content, options);
+    };
+  }
+}
+
 /* ------------------------------------ */
 /* Initialize module                    */
 /* ------------------------------------ */
@@ -56,6 +70,8 @@ Hooks.once('init', async () => {
   registerSettings();
 
   registerStaticLayer();
+
+  suppressCoreScrollingText();
 
   state = new State();
 });

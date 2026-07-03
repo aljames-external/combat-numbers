@@ -56,5 +56,7 @@
     "COMBATNUMBERS.SETTINGS.logVerbosityError": "Errors Only",
     "COMBATNUMBERS.SETTINGS.logVerbosityWarn": "Warnings & Errors",
     "COMBATNUMBERS.SETTINGS.logVerbosityInfo": "Info, Warnings & Errors",
-    "COMBATNUMBERS.SETTINGS.logVerbosityDebug": "Debug (Verbose)"
+    "COMBATNUMBERS.SETTINGS.logVerbosityDebug": "Debug (Verbose)",
+    "COMBATNUMBERS.SETTINGS.hideCoreScrollingTextName": "Hide Core Foundry Scrolling Text",
+    "COMBATNUMBERS.SETTINGS.hideCoreScrollingTextHint": "Hides Foundry VTT's built-in scrolling damage and healing text on tokens so only Combat Numbers is displayed."
 }

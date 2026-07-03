@@ -24,6 +24,15 @@ export default () => {
     },
   });
 
+  game.settings.register(MODULE_ID, 'hide_core_scrolling_text', {
+    name: localize('COMBATNUMBERS.SETTINGS.hideCoreScrollingTextName', 'Hide Core Foundry Scrolling Text'),
+    hint: localize('COMBATNUMBERS.SETTINGS.hideCoreScrollingTextHint', "Hides Foundry VTT's built-in scrolling text on tokens so only Combat Numbers is displayed."),
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean,
+  });
+
   const dispositionChoices = {};
   dispositionChoices[Constants.MASKED_DISPOSITION_CHOICES.HOSTILE] = localize(
     'COMBATNUMBERS.SETTINGS.maskDispositionChoiceHostile',
