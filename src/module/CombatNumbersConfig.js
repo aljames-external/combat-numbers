@@ -3,7 +3,7 @@ import { ApplicationV2, HandlebarsApplicationMixin } from '../lib/compat.js';
 import Constants from './Constants.js';
 
 /**
- * ApplicationV2 form to configure appearance settings of Combat Numbers.
+ * Configure appearance settings of Combat Numbers.
  */
 export default class CombatNumbersConfig extends HandlebarsApplicationMixin(ApplicationV2) {
   constructor(options = {}) {
@@ -13,7 +13,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
 
   static DEFAULT_OPTIONS = {
     id: 'combat-numbers-config',
-    classes: ['combat-numbers-config-window'],
+    classes: ['combat-numbers-config-form'],
     tag: 'form',
     form: {
       handler: CombatNumbersConfig.onSubmitForm,
@@ -24,7 +24,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
       icon: 'fa-solid fa-palette',
     },
     position: {
-      width: 560,
+      width: 580,
       height: 'auto',
     },
   };
@@ -94,7 +94,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
 
   /** @override */
   async _prepareContext(options) {
-    const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance');
+    const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance') || CombatNumbersConfig.DEFAULT_APPEARANCE;
     const defaultAppearance = CombatNumbersConfig.DEFAULT_APPEARANCE;
 
     const fontName = appearance.font ?? defaultAppearance.font;
@@ -127,7 +127,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     super._onRender(context, options);
     const html = $(this.element);
 
-    const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance');
+    const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance') || CombatNumbersConfig.DEFAULT_APPEARANCE;
     const fontKey = this._getFontKeyByName(appearance.font);
 
     html.find('select[name="font"]').val(fontKey);
