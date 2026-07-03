@@ -143,7 +143,7 @@ export default () => {
     name: localize('COMBATNUMBERS.SETTINGS.hpObjectPathName', 'HP Object Path'),
     hint: localize('COMBATNUMBERS.SETTINGS.hpObjectPathHint', 'Object path to locate the HP attribute.'),
     scope: 'world',
-    config: true,
+    config: false,
     default: '',
     type: String,
   });
@@ -151,7 +151,7 @@ export default () => {
     name: localize('COMBATNUMBERS.SETTINGS.tempHpObjectPathName', 'Temporary HP Object Path'),
     hint: localize('COMBATNUMBERS.SETTINGS.tempHpObjectPathHint', 'Object path referencing temporary HP.'),
     scope: 'world',
-    config: true,
+    config: false,
     default: '',
     type: String,
   });
