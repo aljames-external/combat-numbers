@@ -121,9 +121,10 @@ export default class Renderer {
    * @private
    */
   async _render(text, stylizerType, x, y) {
-    if (!this.layer || this.layer.destroyed) {
-      this.layer = canvas.combatNumbers || canvas.layers?.find((l) => l instanceof CombatNumberLayer);
-    }
+    const getTargetLayer = () => this.layer
+      || canvas.combatNumbers
+      || canvas.layers?.find((l) => l instanceof CombatNumberLayer)
+      || canvas.stage;
 
     const amountStylizer = new AmountStylizer(text, this.appearance);
     const dmgNum = amountStylizer.stylize(stylizerType);
@@ -141,7 +142,12 @@ export default class Renderer {
       (resolve) => setTimeout(resolve, this._getWaitTime()),
     );
 
-    const child = this.layer.addChild(dmgNum);
+    const targetLayer = getTargetLayer();
+    if (!targetLayer) {
+      return;
+    }
+
+    const child = targetLayer.addChild(dmgNum);
 
     const anim1 = ease.add(
       child,
@@ -164,7 +170,10 @@ export default class Renderer {
         );
 
         anim3.once('complete', () => {
-          this.layer.removeChild(child);
+          if (child.parent) {
+            child.parent.removeChild(child);
+          }
+          child.destroy({ children: true });
         });
       });
     });
