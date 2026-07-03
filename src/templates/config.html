@@ -1,138 +1,160 @@
-<form autocomplete="off" class="form-combat-numbers">
-    <!-- Live Preview Stage -->
-    <div class="cn-preview-card">
-        <div class="cn-preview-stage">
-            <span class="cn-preview-sample cn-preview-damage" id="cnPreviewDamage">-25</span>
-            <span class="cn-preview-sample cn-preview-heal" id="cnPreviewHeal">+12</span>
+<form autocomplete="off" class="cn-config-form">
+    <div class="cn-config-container">
+        <!-- Header -->
+        <div class="cn-config-header">
+            <div class="cn-header-icon-wrapper">
+                <i class="fas fa-palette"></i>
+            </div>
+            <div class="cn-header-text">
+                <h2>{{localize "COMBATNUMBERS.SETTINGS.configTitle"}}</h2>
+                <p class="notes">{{localize "COMBATNUMBERS.SETTINGS.configHint"}}</p>
+            </div>
         </div>
-    </div>
 
-    <div class="cn-settings-container">
-        <!-- Font & Typography Card -->
-        <div class="cn-card">
-            <h3 class="cn-card-title"><i class="fas fa-font"></i> {{localize "COMBATNUMBERS.SETTINGS.titleFont"}}</h3>
+        <hr class="cn-divider">
 
-            <div class="form-group">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.labelFontFamily"}}</label>
-                <div class="form-fields">
-                    <select name="font" id="cnFontSelect">
-                        {{#select font}}
-                        {{#each fontList as |name key|}}
-                            <option value="{{key}}">{{name}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </div>
+        <!-- Live Preview Stage Card -->
+        <div class="cn-preview-card">
+            <div class="cn-preview-badge">LIVE PREVIEW</div>
+            <div class="cn-preview-stage">
+                <span class="cn-preview-sample cn-preview-damage" id="cnPreviewDamage">-25</span>
+                <span class="cn-preview-sample cn-preview-heal" id="cnPreviewHeal">+12</span>
             </div>
+        </div>
 
-            <div class="form-group form-group-font-other" style="display: none;">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.labelFontFamilyOther"}}</label>
-                <div class="form-fields">
-                    <input type="text" id="fontOther" name="fontOther" value="{{fontOther}}">
-                </div>
-            </div>
+        <!-- Cards List -->
+        <div class="cn-cards-list">
+            <!-- Font & Typography Card -->
+            <div class="cn-card">
+                <h3 class="cn-card-title"><i class="fas fa-font"></i> {{localize "COMBATNUMBERS.SETTINGS.titleFont"}}</h3>
 
-            <div class="form-group">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.labelFontSize"}}</label>
-                <div class="form-fields">
-                    <select name="fontSize" id="cnFontSizeSelect">
-                        {{#select fontSize}}
-                        {{#each fontSizeList as |name key|}}
-                        <option value="{{key}}">{{name}}</option>
-                        {{/each}}
-                        {{/select}}
+                <div class="form-group">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.labelFontFamily"}}</label>
+                    <div class="form-fields">
+                        <select name="font" id="cnFontSelect">
+                            {{#select font}}
+                            {{#each fontList as |name key|}}
+                                <option value="{{key}}">{{name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
                     </div>
                 </div>
-                <p class="notes">{{localize "COMBATNUMBERS.SETTINGS.fontSizeHint"}}</p>
-            </div>
 
-            <div class="form-group">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.bold"}}</label>
-                <div class="form-fields">
-                    <input type="checkbox" name="bold" id="cnBoldToggle" {{checked bold}} />
+                <div class="form-group form-group-font-other" style="display: none;">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.labelFontFamilyOther"}}</label>
+                    <div class="form-fields">
+                        <input type="text" id="fontOther" name="fontOther" value="{{fontOther}}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.labelFontSize"}}</label>
+                    <div class="form-fields">
+                        <select name="fontSize" id="cnFontSizeSelect">
+                            {{#select fontSize}}
+                            {{#each fontSizeList as |name key|}}
+                            <option value="{{key}}">{{name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.bold"}}</label>
+                    <div class="form-fields">
+                        <label class="cn-switch">
+                            <input type="checkbox" name="bold" id="cnBoldToggle" {{checked bold}} />
+                            <span class="cn-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.italic"}}</label>
+                    <div class="form-fields">
+                        <label class="cn-switch">
+                            <input type="checkbox" name="italic" id="cnItalicToggle" {{checked italic}} />
+                            <span class="cn-slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.italic"}}</label>
-                <div class="form-fields">
-                    <input type="checkbox" name="italic" id="cnItalicToggle" {{checked italic}} />
+            <!-- Fill Colors Card -->
+            <div class="cn-card">
+                <h3 class="cn-card-title"><i class="fas fa-fill-drip"></i> {{localize "COMBATNUMBERS.SETTINGS.titleFill"}}</h3>
+
+                <div class="form-group">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.damageColorLabel"}}</label>
+                    <div class="form-fields">
+                        <input type="text" name="damageColor" id="cnDamageColorInput" value="{{damageColor}}" />
+                        <input type="color" name="damageColorSelector" id="cnDamageColorPicker" value="{{damageColor}}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.healColorLabel"}}</label>
+                    <div class="form-fields">
+                        <input type="text" name="healColor" id="cnHealColorInput" value="{{healColor}}" />
+                        <input type="color" name="healColorSelector" id="cnHealColorPicker" value="{{healColor}}" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stroke Card -->
+            <div class="cn-card">
+                <h3 class="cn-card-title"><i class="fas fa-border-style"></i> {{localize "COMBATNUMBERS.SETTINGS.titleStroke"}}</h3>
+
+                <div class="form-group">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.strokeColorLabel"}}</label>
+                    <div class="form-fields">
+                        <input type="text" name="strokeColor" id="cnStrokeColorInput" value="{{strokeColor}}" />
+                        <input type="color" name="strokeColorSelector" id="cnStrokeColorPicker" value="{{strokeColor}}" />
+                    </div>
+                </div>
+
+                <div class="form-group form-group-stroke-thickness">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.strokeThicknessLabel"}}</label>
+                    <div class="form-fields">
+                        <input type="range" name="strokeThickness" id="cnStrokeThicknessRange" value="{{strokeThickness}}" min="0" max="10" step="0.5">
+                        <span class="range-value" id="cnStrokeThicknessValue">{{strokeThickness}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drop Shadow Card -->
+            <div class="cn-card">
+                <h3 class="cn-card-title"><i class="fas fa-clone"></i> {{localize "COMBATNUMBERS.SETTINGS.titleDropShadow"}}</h3>
+
+                <div class="form-group">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.dropShadowColorLabel"}}</label>
+                    <div class="form-fields">
+                        <input type="text" name="dropShadowColor" id="cnDropShadowColorInput" value="{{dropShadowColor}}" />
+                        <input type="color" name="dropShadowColorSelector" id="cnDropShadowColorPicker" value="{{dropShadowColor}}" />
+                    </div>
+                </div>
+
+                <div class="form-group form-group-drop-shadow-alpha">
+                    <label>{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaLabel"}}</label>
+                    <div class="form-fields">
+                        <input type="range" name="dropShadowAlpha" id="cnDropShadowAlphaRange" value="{{dropShadowAlpha}}" min="0" max="1" step="0.05">
+                        <span class="range-value" id="cnDropShadowAlphaValue">{{dropShadowAlpha}}</span>
+                    </div>
+                    <p class="notes">{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaHint"}}</p>
                 </div>
             </div>
         </div>
 
-        <!-- Fill Colors Card -->
-        <div class="cn-card">
-            <h3 class="cn-card-title"><i class="fas fa-palette"></i> {{localize "COMBATNUMBERS.SETTINGS.titleFill"}}</h3>
-
-            <div class="form-group">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.damageColorLabel"}}</label>
-                <div class="form-fields">
-                    <input type="text" name="damageColor" id="cnDamageColorInput" value="{{damageColor}}" />
-                    <input type="color" name="damageColorSelector" id="cnDamageColorPicker" value="{{damageColor}}" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.healColorLabel"}}</label>
-                <div class="form-fields">
-                    <input type="text" name="healColor" id="cnHealColorInput" value="{{healColor}}" />
-                    <input type="color" name="healColorSelector" id="cnHealColorPicker" value="{{healColor}}" />
-                </div>
-            </div>
+        <!-- Footer Buttons -->
+        <div class="cn-config-footer">
+            <button type="submit" name="submit" class="cn-btn-primary">
+                <i class="fas fa-save"></i> {{localize "SETTINGS.Save"}}
+            </button>
+            <button type="button" name="reset" class="cn-btn-secondary">
+                <i class="fas fa-undo"></i> {{localize "SETTINGS.Reset"}}
+            </button>
         </div>
-
-        <!-- Stroke Card -->
-        <div class="cn-card">
-            <h3 class="cn-card-title"><i class="fas fa-border-style"></i> {{localize "COMBATNUMBERS.SETTINGS.titleStroke"}}</h3>
-
-            <div class="form-group">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.strokeColorLabel"}}</label>
-                <div class="form-fields">
-                    <input type="text" name="strokeColor" id="cnStrokeColorInput" value="{{strokeColor}}" />
-                    <input type="color" name="strokeColorSelector" id="cnStrokeColorPicker" value="{{strokeColor}}" />
-                </div>
-            </div>
-
-            <div class="form-group form-group-stroke-thickness">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.strokeThicknessLabel"}}</label>
-                <div class="form-fields">
-                    <input type="range" name="strokeThickness" id="cnStrokeThicknessRange" value="{{strokeThickness}}" min="0" max="10" step="0.5">
-                    <span class="range-value" id="cnStrokeThicknessValue">{{strokeThickness}}</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Drop Shadow Card -->
-        <div class="cn-card">
-            <h3 class="cn-card-title"><i class="fas fa-clone"></i> {{localize "COMBATNUMBERS.SETTINGS.titleDropShadow"}}</h3>
-
-            <div class="form-group">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.dropShadowColorLabel"}}</label>
-                <div class="form-fields">
-                    <input type="text" name="dropShadowColor" id="cnDropShadowColorInput" value="{{dropShadowColor}}" />
-                    <input type="color" name="dropShadowColorSelector" id="cnDropShadowColorPicker" value="{{dropShadowColor}}" />
-                </div>
-            </div>
-
-            <div class="form-group form-group-drop-shadow-alpha">
-                <label>{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaLabel"}}</label>
-                <div class="form-fields">
-                    <input type="range" name="dropShadowAlpha" id="cnDropShadowAlphaRange" value="{{dropShadowAlpha}}" min="0" max="1" step="0.05">
-                    <span class="range-value" id="cnDropShadowAlphaValue">{{dropShadowAlpha}}</span>
-                </div>
-                <p class="notes">{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaHint"}}</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="form-group buttons-save">
-        <button type="submit" name="submit">
-            <i class="fas fa-save"></i> {{localize "SETTINGS.Save"}}
-        </button>
-        <button type="button" name="reset">
-            <i class="fas fa-undo"></i> {{localize "SETTINGS.Reset"}}
-        </button>
     </div>
 </form>

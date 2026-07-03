@@ -1,31 +1,40 @@
-/* global FormApplication */
-/* global jQuery */
-
 import { localize } from '../lib/utils.js';
 import Constants from './Constants.js';
 
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
- * Form application to configure settings of Combat Numbers.
- *
- * Currently, specific to appearance settings.
+ * ApplicationV2 form to configure appearance settings of Combat Numbers.
  */
-export default class CombatNumbersConfig extends FormApplication {
-  constructor(object = {}, options = {}) {
-    super(object, options);
+export default class CombatNumbersConfig extends HandlebarsApplicationMixin(ApplicationV2) {
+  constructor(options = {}) {
+    super(options);
     this.fontOther = localize('COMBATNUMBERS.SETTINGS.fontFamilyOther', 'Other');
   }
 
-  /** @override */
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      title: localize('COMBATNUMBERS.SETTINGS.configTitle', 'Configure Appearance'),
-      id: 'combat-numbers-config',
-      template: 'modules/combat-numbers/src/templates/config.html',
-      width: 540,
-      height: 'auto',
+  static DEFAULT_OPTIONS = {
+    id: 'combat-numbers-config',
+    classes: ['combat-numbers-config-window'],
+    tag: 'form',
+    form: {
+      handler: CombatNumbersConfig.onSubmitForm,
       closeOnSubmit: true,
-    });
-  }
+    },
+    window: {
+      title: 'COMBATNUMBERS.SETTINGS.configTitle',
+      icon: 'fa-solid fa-palette',
+    },
+    position: {
+      width: 560,
+      height: 'auto',
+    },
+  };
+
+  static PARTS = {
+    form: {
+      template: 'modules/combat-numbers/src/templates/config.html',
+    },
+  };
 
   /**
    * The default appearance settings object.
@@ -85,10 +94,11 @@ export default class CombatNumbersConfig extends FormApplication {
   }
 
   /** @override */
-  getData() {
+  async _prepareContext(options) {
     const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance');
     const defaultAppearance = CombatNumbersConfig.DEFAULT_APPEARANCE;
-    const object = {
+
+    return {
       fontList: this._getFontList(),
       fontSizeList: CombatNumbersConfig.FONT_SIZES,
       font: appearance.font ?? defaultAppearance.font,
@@ -101,13 +111,12 @@ export default class CombatNumbersConfig extends FormApplication {
       dropShadowColor: appearance.dropShadowColor ?? defaultAppearance.dropShadowColor,
       dropShadowAlpha: appearance.dropShadowAlpha ?? defaultAppearance.dropShadowAlpha,
     };
-
-    return object;
   }
 
   /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
+  _onRender(context, options) {
+    super._onRender(context, options);
+    const html = $(this.element);
 
     const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance');
     const fontKey = this._getFontKeyByName(appearance.font);
@@ -125,7 +134,7 @@ export default class CombatNumbersConfig extends FormApplication {
     const fontOtherName = this.fontOther;
 
     html.find('select[name="font"]').change((e) => {
-      const optionName = jQuery(e.currentTarget).find('option:selected').text();
+      const optionName = $(e.currentTarget).find('option:selected').text();
       if (optionName !== fontOtherName) {
         fontOther.val('');
         fontOtherFormGroup.hide();
@@ -243,23 +252,31 @@ export default class CombatNumbersConfig extends FormApplication {
     return `${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}`;
   }
 
-  /** @override */
-  async _updateObject(event, formData) {
-    const appearance = {};
+  /**
+   * Handle form submission in ApplicationV2.
+   */
+  static async onSubmitForm(event, form, formData) {
+    const data = formData.object;
+    const fontList = CombatNumbersConfig.prototype._getFontList();
+    const selectedFontKey = parseInt(data.font, 10);
+    let selectedFont = fontList[selectedFontKey];
 
-    appearance.font = this._getSelectedFont(
-      parseInt(formData.font, 10),
-      formData,
-    );
-    appearance.fontSize = formData.fontSize;
-    appearance.bold = formData.bold;
-    appearance.italic = formData.italic;
-    appearance.damageColor = formData.damageColor;
-    appearance.healColor = formData.healColor;
-    appearance.strokeColor = formData.strokeColor;
-    appearance.strokeThickness = formData.strokeThickness;
-    appearance.dropShadowColor = formData.dropShadowColor;
-    appearance.dropShadowAlpha = formData.dropShadowAlpha;
+    if (selectedFont === localize('COMBATNUMBERS.SETTINGS.fontFamilyOther', 'Other')) {
+      selectedFont = data.fontOther ? String(data.fontOther).trim() : CombatNumbersConfig.DEFAULT_APPEARANCE.font;
+    }
+
+    const appearance = {
+      font: selectedFont,
+      fontSize: data.fontSize,
+      bold: !!data.bold,
+      italic: !!data.italic,
+      damageColor: data.damageColor,
+      healColor: data.healColor,
+      strokeColor: data.strokeColor,
+      strokeThickness: Number(data.strokeThickness),
+      dropShadowColor: data.dropShadowColor,
+      dropShadowAlpha: Number(data.dropShadowAlpha),
+    };
 
     await game.settings.set(
       Constants.MODULE_NAME,

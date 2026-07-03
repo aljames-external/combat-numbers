@@ -1,208 +1,336 @@
-/* Combat Numbers - Appearance Configuration Menu Styling */
+/* ============================================================================
+   COMBAT NUMBERS - CONFIGURE APPEARANCE MENU STYLES (EMP & BAD DESIGN SYSTEM)
+   ============================================================================ */
 
-.form-combat-numbers {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0.5rem;
-  font-family: var(--font-primary, sans-serif);
+.combat-numbers-config-window .window-content {
+    background: #1a1a1e url("../../../ui/denim.png") repeat !important;
+    color: #f0f0f0;
+    padding: 16px;
+    font-family: "Signika", var(--font-primary, sans-serif);
 }
 
-/* Live Preview Card */
+.cn-config-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.cn-config-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Header Section */
+.cn-config-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 2px 0;
+}
+
+.cn-header-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    background: rgba(167, 139, 250, 0.12);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 50%;
+    color: #a78bfa;
+    font-size: 1.5rem;
+    box-shadow: 0 0 12px rgba(167, 139, 250, 0.2);
+    flex-shrink: 0;
+}
+
+.cn-header-text h2 {
+    margin: 0;
+    border: none;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.cn-header-text p.notes {
+    margin: 3px 0 0 0;
+    font-size: 0.82rem;
+    color: #cbd5e1;
+    line-height: 1.35;
+}
+
+.cn-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, rgba(167, 139, 250, 0), rgba(167, 139, 250, 0.35), rgba(167, 139, 250, 0));
+    margin: 2px 0 6px 0;
+}
+
+/* Live Preview Stage Card */
 .cn-preview-card {
-  background: linear-gradient(135deg, rgba(20, 24, 33, 0.95) 0%, rgba(32, 38, 52, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-  padding: 1.25rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  text-align: center;
-  margin-bottom: 0.5rem;
-  position: relative;
-  overflow: hidden;
+    background: rgba(15, 15, 20, 0.75);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 10px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
-.cn-preview-card::before {
-  content: 'LIVE PREVIEW';
-  position: absolute;
-  top: 6px;
-  left: 10px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.35);
-  text-transform: uppercase;
+.cn-preview-badge {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #a78bfa;
+    background: rgba(167, 139, 250, 0.12);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 4px;
+    padding: 2px 6px;
+    text-transform: uppercase;
 }
 
 .cn-preview-stage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  min-height: 70px;
-  padding-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    min-height: 65px;
+    padding-top: 0.6rem;
 }
 
 .cn-preview-sample {
-  display: inline-block;
-  user-select: none;
-  transition: all 0.2s ease-in-out;
+    display: inline-block;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
 }
 
-/* Settings Cards Section */
-.cn-settings-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* Settings Cards List */
+.cn-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .cn-card {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 1rem;
-  transition: border-color 0.2s ease;
+    background: rgba(30, 30, 36, 0.55);
+    border: 1px solid rgba(167, 139, 250, 0.12);
+    border-radius: 8px;
+    padding: 14px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
 .cn-card:hover {
-  border-color: rgba(255, 255, 255, 0.18);
+    border-color: rgba(167, 139, 250, 0.35);
+    background: rgba(30, 30, 36, 0.75);
+    box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.3);
 }
 
 .cn-card-title {
-  margin: 0 0 0.75rem 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: var(--color-text-light-highlight, #f0f0f0);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 0.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+    margin: 0 0 10px 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f8fafc;
+    border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .cn-card-title i {
-  color: var(--color-text-hyperlink, #ff6400);
+    color: #a78bfa;
 }
 
-/* Form Groups Layout */
-.form-combat-numbers .form-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.6rem;
+/* Form Groups */
+.cn-card .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 12px;
 }
 
-.form-combat-numbers .form-group:last-child {
-  margin-bottom: 0;
+.cn-card .form-group:last-child {
+    margin-bottom: 0;
 }
 
-.form-combat-numbers .form-group label {
-  flex: 1 1 45%;
-  font-weight: 500;
-  font-size: 0.85rem;
-  color: var(--color-text-light-primary, #ddd);
+.cn-card .form-group label {
+    flex: 1 1 45%;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #cbd5e1;
 }
 
-.form-combat-numbers .form-group .form-fields {
-  flex: 1 1 55%;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.cn-card .form-group .form-fields {
+    flex: 1 1 55%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.form-combat-numbers input[type="text"],
-.form-combat-numbers select {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 5px;
-  color: #fff;
-  padding: 0.35rem 0.5rem;
-  font-size: 0.85rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+.cn-card input[type="text"],
+.cn-card select {
+    background: rgba(15, 15, 20, 0.6) !important;
+    border: 1px solid rgba(167, 139, 250, 0.2) !important;
+    border-radius: 5px !important;
+    color: #f8fafc !important;
+    padding: 4px 8px !important;
+    font-size: 0.85rem !important;
+    height: auto !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-.form-combat-numbers input[type="text"]:focus,
-.form-combat-numbers select:focus {
-  border-color: var(--color-text-hyperlink, #ff6400);
-  box-shadow: 0 0 6px rgba(255, 100, 0, 0.4);
-  outline: none;
+.cn-card input[type="text"]:focus,
+.cn-card select:focus {
+    border-color: #a78bfa !important;
+    box-shadow: 0 0 8px rgba(167, 139, 250, 0.35) !important;
+    outline: none !important;
 }
 
-.form-combat-numbers input[type="color"] {
-  width: 34px;
-  height: 30px;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  background: none;
-  cursor: pointer;
+.cn-card input[type="color"] {
+    width: 32px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
-.form-combat-numbers input[type="range"] {
-  flex: 1;
-  accent-color: var(--color-text-hyperlink, #ff6400);
+.cn-card input[type="range"] {
+    flex: 1;
+    accent-color: #a78bfa;
 }
 
-.form-combat-numbers .range-value {
-  min-width: 32px;
-  text-align: right;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-text-light-highlight, #fff);
-  background: rgba(255, 255, 255, 0.08);
-  padding: 2px 6px;
-  border-radius: 4px;
+.cn-card .range-value {
+    min-width: 32px;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #a78bfa;
+    background: rgba(167, 139, 250, 0.12);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    padding: 2px 6px;
+    border-radius: 4px;
 }
 
-.form-combat-numbers .notes {
-  margin-top: 0.2rem;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  font-style: italic;
+.cn-card p.notes {
+    margin: 4px 0 0 0;
+    font-size: 0.78rem;
+    color: #94a3b8;
+    font-style: italic;
 }
 
-/* Modern Save / Reset Buttons */
-.form-combat-numbers .buttons-save {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
+/* iOS Style Switch */
+.cn-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 22px;
 }
 
-.form-combat-numbers .buttons-save button {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.cn-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-.form-combat-numbers button[name="submit"] {
-  background: linear-gradient(135deg, #e65100 0%, #ff6d00 100%);
-  color: #fff;
-  border: none;
-  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.35);
+.cn-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #475569;
+    transition: .25s;
+    border-radius: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.form-combat-numbers button[name="submit"]:hover {
-  background: linear-gradient(135deg, #f57c00 0%, #ff8f00 100%);
-  box-shadow: 0 6px 16px rgba(230, 81, 0, 0.5);
-  transform: translateY(-1px);
+.cn-slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #f1f5f9;
+    transition: .25s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.form-combat-numbers button[name="reset"] {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ddd;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+input:checked + .cn-slider {
+    background-color: #7c3aed;
 }
 
-.form-combat-numbers button[name="reset"]:hover {
-  background: rgba(255, 255, 255, 0.16);
-  color: #fff;
-  transform: translateY(-1px);
+input:checked + .cn-slider:before {
+    transform: translateX(22px);
+    background-color: #ffffff;
+}
+
+/* Footer & Buttons */
+.cn-config-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 6px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cn-btn-primary {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #8b5cf6 !important;
+    border-radius: 6px !important;
+    padding: 8px 18px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    height: auto !important;
+    line-height: normal !important;
+    box-shadow: 0 3px 5px rgba(124, 58, 237, 0.25) !important;
+}
+
+.cn-btn-primary:hover {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    box-shadow: 0 5px 12px rgba(124, 58, 237, 0.4) !important;
+    transform: translateY(-0.5px) !important;
+}
+
+.cn-btn-secondary {
+    background: rgba(51, 65, 85, 0.6) !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+    border-radius: 6px !important;
+    padding: 8px 16px !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    height: auto !important;
+    line-height: normal !important;
+}
+
+.cn-btn-secondary:hover {
+    background: rgba(71, 85, 105, 0.8) !important;
+    border-color: rgba(148, 163, 184, 0.4) !important;
+    color: #ffffff !important;
 }
