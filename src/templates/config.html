@@ -1,46 +1,223 @@
-<form class="eskie-recommended-modules-container">
+<form autocomplete="off" class="eskie-recommended-modules-container">
     <header class="eskie-world-scripts-header">
         <div class="eskie-header-icon">
-            <i class="fa-solid fa-puzzle-piece"></i>
+            <i class="fa-solid fa-palette"></i>
         </div>
         <div class="eskie-header-text">
-            <h2>Combat Numbers Debug</h2>
-            <p class="notes">Displaying active system information for debugging</p>
+            <h2>{{localize "COMBATNUMBERS.SETTINGS.configTitle"}}</h2>
+            <p class="notes">{{localize "COMBATNUMBERS.SETTINGS.configHint"}}</p>
         </div>
     </header>
 
     <hr />
 
+    <!-- Live Preview Stage Card -->
+    <div class="cn-preview-card">
+        <span class="cn-preview-badge"><i class="fa-solid fa-eye"></i> LIVE PREVIEW (1x1 TOKEN SCALE)</span>
+        <div class="cn-preview-stage">
+            <div class="cn-token-box">
+                <i class="fas fa-user-shield cn-token-icon"></i>
+                <span class="cn-preview-sample cn-preview-damage" id="cnPreviewDamage">-25</span>
+                <span class="cn-preview-sample cn-preview-heal" id="cnPreviewHeal">+12</span>
+            </div>
+        </div>
+    </div>
+
     <div class="eskie-recommended-modules-scroll-area">
+        <!-- Font & Typography Section -->
         <div class="eskie-category-group">
             <div class="eskie-category-header">
-                <i class="fa-solid fa-gamepad"></i>
-                <h3>Active System Information</h3>
+                <i class="fa-solid fa-font"></i>
+                <h3>{{localize "COMBATNUMBERS.SETTINGS.titleFont"}}</h3>
             </div>
             <div class="eskie-recommended-modules-list">
-                <div class="eskie-module-card active">
+                <div class="eskie-module-card">
                     <div class="eskie-card-icon-wrapper">
-                        <i class="fa-solid fa-dice-d20"></i>
+                        <i class="fa-solid fa-font"></i>
                     </div>
                     <div class="eskie-card-details">
-                        <div class="eskie-card-title-row">
-                            <h3 class="eskie-card-title">{{systemTitle}} ({{systemId}})</h3>
-                        </div>
-                        <p class="eskie-card-description">System Version: {{systemVersion}}</p>
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.labelFontFamily"}}</h3>
                     </div>
-                    <div class="eskie-card-status-wrapper">
-                        <span class="eskie-status-badge active">
-                            <i class="fa-solid fa-check-circle"></i> Active
-                        </span>
+                    <div class="eskie-card-control">
+                        <select name="font" id="cnFontSelect">
+                            {{{selectOptions fontList selected=font}}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="eskie-module-card form-group-font-other" style="display: none;">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-pen-field"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.labelFontFamilyOther"}}</h3>
+                    </div>
+                    <div class="eskie-card-control">
+                        <input type="text" id="fontOther" name="fontOther" value="{{fontOther}}">
+                    </div>
+                </div>
+
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-text-height"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.labelFontSize"}}</h3>
+                        <p class="eskie-card-description">{{localize "COMBATNUMBERS.SETTINGS.fontSizeHint"}}</p>
+                    </div>
+                    <div class="eskie-card-control">
+                        <select name="fontSize" id="cnFontSizeSelect">
+                            {{{selectOptions fontSizeList selected=fontSize}}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-bold"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.bold"}}</h3>
+                    </div>
+                    <div class="eskie-card-control">
+                        <label class="eskie-switch">
+                            <input type="checkbox" name="bold" id="cnBoldToggle" {{checked bold}} />
+                            <span class="eskie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-italic"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.italic"}}</h3>
+                    </div>
+                    <div class="eskie-card-control">
+                        <label class="eskie-switch">
+                            <input type="checkbox" name="italic" id="cnItalicToggle" {{checked italic}} />
+                            <span class="eskie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fill Colors Section -->
+        <div class="eskie-category-group">
+            <div class="eskie-category-header">
+                <i class="fa-solid fa-fill-drip"></i>
+                <h3>{{localize "COMBATNUMBERS.SETTINGS.titleFill"}}</h3>
+            </div>
+            <div class="eskie-recommended-modules-list">
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-heart-crack"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.damageColorLabel"}}</h3>
+                    </div>
+                    <div class="eskie-card-control color-pair">
+                        <input type="text" name="damageColor" id="cnDamageColorInput" value="{{damageColor}}" />
+                        <input type="color" name="damageColorSelector" id="cnDamageColorPicker" value="{{damageColor}}" />
+                    </div>
+                </div>
+
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.healColorLabel"}}</h3>
+                    </div>
+                    <div class="eskie-card-control color-pair">
+                        <input type="text" name="healColor" id="cnHealColorInput" value="{{healColor}}" />
+                        <input type="color" name="healColorSelector" id="cnHealColorPicker" value="{{healColor}}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stroke Section -->
+        <div class="eskie-category-group">
+            <div class="eskie-category-header">
+                <i class="fa-solid fa-border-style"></i>
+                <h3>{{localize "COMBATNUMBERS.SETTINGS.titleStroke"}}</h3>
+            </div>
+            <div class="eskie-recommended-modules-list">
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-border-all"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.strokeColorLabel"}}</h3>
+                    </div>
+                    <div class="eskie-card-control color-pair">
+                        <input type="text" name="strokeColor" id="cnStrokeColorInput" value="{{strokeColor}}" />
+                        <input type="color" name="strokeColorSelector" id="cnStrokeColorPicker" value="{{strokeColor}}" />
+                    </div>
+                </div>
+
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-ruler-combined"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.strokeThicknessLabel"}}</h3>
+                    </div>
+                    <div class="eskie-card-control range-pair">
+                        <input type="range" name="strokeThickness" id="cnStrokeThicknessRange" value="{{strokeThickness}}" min="0" max="10" step="0.5">
+                        <span class="range-value" id="cnStrokeThicknessValue">{{strokeThickness}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drop Shadow Section -->
+        <div class="eskie-category-group">
+            <div class="eskie-category-header">
+                <i class="fa-solid fa-clone"></i>
+                <h3>{{localize "COMBATNUMBERS.SETTINGS.titleDropShadow"}}</h3>
+            </div>
+            <div class="eskie-recommended-modules-list">
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.dropShadowColorLabel"}}</h3>
+                    </div>
+                    <div class="eskie-card-control color-pair">
+                        <input type="text" name="dropShadowColor" id="cnDropShadowColorInput" value="{{dropShadowColor}}" />
+                        <input type="color" name="dropShadowColorSelector" id="cnDropShadowColorPicker" value="{{dropShadowColor}}" />
+                    </div>
+                </div>
+
+                <div class="eskie-module-card">
+                    <div class="eskie-card-icon-wrapper">
+                        <i class="fa-solid fa-circle-half-stroke"></i>
+                    </div>
+                    <div class="eskie-card-details">
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaLabel"}}</h3>
+                        <p class="eskie-card-description">{{localize "COMBATNUMBERS.SETTINGS.dropShadowAlphaHint"}}</p>
+                    </div>
+                    <div class="eskie-card-control range-pair">
+                        <input type="range" name="dropShadowAlpha" id="cnDropShadowAlphaRange" value="{{dropShadowAlpha}}" min="0" max="1" step="0.05">
+                        <span class="range-value" id="cnDropShadowAlphaValue">{{dropShadowAlpha}}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer Buttons -->
     <footer class="eskie-world-scripts-footer">
         <button type="submit" name="submit" class="eskie-btn-primary">
-            <i class="fa-solid fa-check"></i> Close
+            <i class="fa-solid fa-floppy-disk"></i> {{localize "SETTINGS.Save"}}
+        </button>
+        <button type="button" id="cnResetBtn" class="eskie-btn-secondary">
+            <i class="fa-solid fa-rotate-left"></i> {{localize "SETTINGS.Reset"}}
         </button>
     </footer>
 </form>

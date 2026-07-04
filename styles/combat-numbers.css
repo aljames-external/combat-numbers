@@ -111,7 +111,7 @@
     display: flex !important;
     flex-direction: column !important;
     gap: 18px !important;
-    max-height: 540px !important;
+    max-height: 500px !important;
     overflow-y: auto !important;
     padding-right: 6px !important;
 }
@@ -160,6 +160,7 @@
 .eskie-module-card {
     display: flex !important;
     align-items: center !important;
+    justify-content: space-between !important;
     gap: 15px !important;
     background: rgba(30, 30, 36, 0.55) !important;
     border: 1px solid rgba(167, 139, 250, 0.12) !important;
@@ -176,11 +177,6 @@
     box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.3) !important;
 }
 
-.eskie-module-card.active {
-    border-color: rgba(167, 139, 250, 0.5) !important;
-    background: rgba(124, 58, 237, 0.08) !important;
-}
-
 .eskie-card-icon-wrapper {
     display: flex !important;
     align-items: center !important;
@@ -195,10 +191,9 @@
     flex-shrink: 0 !important;
 }
 
-.eskie-module-card.active .eskie-card-icon-wrapper {
-    background: rgba(124, 58, 237, 0.2) !important;
-    color: #ddd6fe !important;
-    box-shadow: 0 0 10px rgba(124, 58, 237, 0.25) !important;
+.eskie-module-card:hover .eskie-card-icon-wrapper {
+    background: rgba(167, 139, 250, 0.16) !important;
+    color: #c084fc !important;
 }
 
 .eskie-card-details {
@@ -225,28 +220,191 @@
     line-height: 1.35 !important;
 }
 
-.eskie-status-badge {
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    padding: 4px 10px !important;
-    border-radius: 20px !important;
-    display: inline-flex !important;
+/* Card Control Area */
+.eskie-card-control {
+    flex-shrink: 0 !important;
+    display: flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    text-transform: capitalize !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
 }
 
-.eskie-status-badge.active {
-    background: rgba(34, 197, 94, 0.15) !important;
-    color: #4ade80 !important;
-    border: 1px solid rgba(34, 197, 94, 0.35) !important;
-    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2) !important;
+.eskie-card-control input[type="text"],
+.eskie-card-control select {
+    background: rgba(15, 15, 20, 0.7) !important;
+    border: 1px solid rgba(167, 139, 250, 0.3) !important;
+    border-radius: 5px !important;
+    color: #ffffff !important;
+    padding: 4px 8px !important;
+    font-size: 0.85rem !important;
+    font-family: "Signika", sans-serif !important;
+    height: 28px !important;
+    min-width: 130px !important;
 }
 
+.eskie-card-control input[type="text"]:focus,
+.eskie-card-control select:focus {
+    border-color: #a78bfa !important;
+    box-shadow: 0 0 8px rgba(167, 139, 250, 0.4) !important;
+    outline: none !important;
+}
+
+.eskie-card-control input[type="color"] {
+    width: 32px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(167, 139, 250, 0.3) !important;
+    border-radius: 4px !important;
+    background: none !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+}
+
+.eskie-card-control input[type="range"] {
+    width: 100px !important;
+    accent-color: #7c3aed !important;
+}
+
+.eskie-card-control .range-value {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #c084fc !important;
+    background: rgba(167, 139, 250, 0.12) !important;
+    border: 1px solid rgba(167, 139, 250, 0.25) !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    min-width: 28px !important;
+    text-align: center !important;
+}
+
+/* Premium iOS Switch */
+.eskie-switch {
+    position: relative !important;
+    display: inline-block !important;
+    width: 44px !important;
+    height: 22px !important;
+    margin: 0 !important;
+}
+
+.eskie-switch input {
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.eskie-slider {
+    position: absolute !important;
+    cursor: pointer !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background-color: #475569 !important;
+    transition: .25s !important;
+    border-radius: 34px !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.eskie-slider:before {
+    position: absolute !important;
+    content: "" !important;
+    height: 14px !important;
+    width: 14px !important;
+    left: 3px !important;
+    bottom: 3px !important;
+    background-color: #f1f5f9 !important;
+    transition: .25s !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+input:checked + .eskie-slider {
+    background-color: #7c3aed !important;
+}
+
+input:checked + .eskie-slider:before {
+    transform: translateX(22px) !important;
+    background-color: #ffffff !important;
+}
+
+/* Live Preview Stage Card */
+.cn-preview-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(30, 30, 36, 0.55) !important;
+    border: 1px solid rgba(167, 139, 250, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+.cn-preview-badge {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    color: #a78bfa !important;
+    background: rgba(167, 139, 250, 0.12) !important;
+    border: 1px solid rgba(167, 139, 250, 0.25) !important;
+    border-radius: 4px !important;
+    padding: 2px 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 8px !important;
+}
+
+.cn-preview-stage {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.cn-token-box {
+    width: 100px !important;
+    height: 100px !important;
+    border: 2px dashed rgba(167, 139, 250, 0.45) !important;
+    border-radius: 8px !important;
+    background: rgba(15, 15, 20, 0.7) !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6) !important;
+    overflow: hidden !important;
+}
+
+.cn-token-icon {
+    font-size: 2.5rem !important;
+    color: rgba(167, 139, 250, 0.2) !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
+
+.cn-preview-sample {
+    position: absolute !important;
+    user-select: none !important;
+    font-family: "Signika", sans-serif !important;
+    white-space: nowrap !important;
+}
+
+.cn-preview-damage {
+    top: 10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+.cn-preview-heal {
+    bottom: 10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+/* Footer & Action Buttons */
 .eskie-world-scripts-footer {
     display: flex !important;
     justify-content: flex-end !important;
+    gap: 10px !important;
     margin-top: 10px !important;
     padding-top: 12px !important;
     border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -269,4 +427,34 @@
     height: auto !important;
     line-height: normal !important;
     box-shadow: 0 3px 5px rgba(124, 58, 237, 0.2) !important;
+}
+
+.eskie-btn-primary:hover {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    box-shadow: 0 5px 10px rgba(124, 58, 237, 0.3) !important;
+    transform: translateY(-0.5px) !important;
+}
+
+.eskie-btn-secondary {
+    background: rgba(51, 65, 85, 0.6) !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+    border-radius: 6px !important;
+    padding: 8px 16px !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    height: auto !important;
+    line-height: normal !important;
+}
+
+.eskie-btn-secondary:hover {
+    background: rgba(71, 85, 105, 0.8) !important;
+    border-color: rgba(148, 163, 184, 0.4) !important;
+    color: #ffffff !important;
 }
