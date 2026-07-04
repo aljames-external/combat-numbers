@@ -8,7 +8,7 @@ import Constants from './Constants.js';
 export default class CombatNumbersConfig extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     id: 'combat-numbers-config',
-    classes: ['eskie-world-scripts-form', 'eskie-recommended-modules-form'],
+    classes: ['cn-config-form', 'cn-appearance-form'],
     tag: 'form',
     form: {
       handler: CombatNumbersConfig.onSubmitForm,
@@ -155,9 +155,9 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     });
 
     // Collapsible category section handlers
-    html.find('.eskie-category-header.cn-collapsible').click((e) => {
+    html.find('.cn-category-header.cn-collapsible').click((e) => {
       const header = $(e.currentTarget);
-      const list = header.next('.eskie-recommended-modules-list');
+      const list = header.next('.cn-module-list');
       header.toggleClass('collapsed');
       list.slideToggle(200);
     });

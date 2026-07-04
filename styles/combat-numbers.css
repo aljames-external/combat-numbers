@@ -3,7 +3,7 @@
    ============================================================================ */
 
 /* Outer Application Window Frame in ApplicationV2 */
-.application.eskie-world-scripts-form,
+.application.cn-config-form,
 #combat-numbers-config {
     background: rgba(26, 26, 30, 0.88) url("../../../ui/denim.png") repeat !important;
     backdrop-filter: blur(10px) !important;
@@ -17,14 +17,14 @@
 }
 
 /* Window Header Styling */
-.application.eskie-world-scripts-form .window-header,
+.application.cn-config-form .window-header,
 #combat-numbers-config .window-header {
     background: rgba(20, 20, 24, 0.9) !important;
     border-bottom: 1px solid rgba(223, 169, 81, 0.3) !important;
     padding: 6px 12px !important;
 }
 
-.application.eskie-world-scripts-form .window-title,
+.application.cn-config-form .window-title,
 #combat-numbers-config .window-title {
     color: #f0e6d2 !important;
     font-family: "Signika", sans-serif !important;
@@ -33,25 +33,25 @@
     text-shadow: 0 0 6px rgba(223, 169, 81, 0.3) !important;
 }
 
-.application.eskie-world-scripts-form .window-icon,
+.application.cn-config-form .window-icon,
 #combat-numbers-config .window-icon {
     color: #dfa951 !important;
 }
 
-.application.eskie-world-scripts-form .header-control,
+.application.cn-config-form .header-control,
 #combat-numbers-config .header-control {
     color: #c9b896 !important;
 }
 
-.application.eskie-world-scripts-form .header-control:hover,
+.application.cn-config-form .header-control:hover,
 #combat-numbers-config .header-control:hover {
     color: #ffffff !important;
 }
 
 /* Window Body & Form Container */
-.application.eskie-world-scripts-form .window-body,
-.application.eskie-world-scripts-form .window-content,
-.application.eskie-world-scripts-form form,
+.application.cn-config-form .window-body,
+.application.cn-config-form .window-content,
+.application.cn-config-form form,
 #combat-numbers-config .window-body,
 #combat-numbers-config form {
     background: transparent !important;
@@ -62,7 +62,7 @@
 }
 
 /* Container */
-.eskie-recommended-modules-container {
+.cn-config-container {
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
@@ -70,21 +70,21 @@
 }
 
 /* Inner Banner Header */
-.eskie-world-scripts-header {
+.cn-config-header {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
     padding: 2px 0 !important;
 }
 
-.eskie-header-icon {
+.cn-header-icon {
     font-size: 1.8rem !important;
     color: #dfa951 !important;
     text-shadow: 0 0 10px rgba(223, 169, 81, 0.35) !important;
     flex-shrink: 0 !important;
 }
 
-.eskie-header-text h2 {
+.cn-header-text h2 {
     margin: 0 !important;
     border: none !important;
     font-size: 1.25rem !important;
@@ -94,14 +94,14 @@
     font-family: "Signika", sans-serif !important;
 }
 
-.eskie-header-text p.notes {
+.cn-header-text p.notes {
     margin: 1px 0 0 0 !important;
     font-size: 0.8rem !important;
     color: #c9b896 !important;
     line-height: 1.25 !important;
 }
 
-.eskie-recommended-modules-container hr {
+.cn-config-container hr {
     border: 0 !important;
     height: 1px !important;
     background: linear-gradient(to right, rgba(223, 169, 81, 0), rgba(223, 169, 81, 0.35), rgba(223, 169, 81, 0)) !important;
@@ -109,7 +109,7 @@
 }
 
 /* Scroll Area & Small Gaps */
-.eskie-recommended-modules-scroll-area {
+.cn-scroll-area {
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
@@ -119,13 +119,13 @@
 }
 
 /* Category Group */
-.eskie-category-group {
+.cn-category-group {
     display: flex !important;
     flex-direction: column !important;
     gap: 4px !important;
 }
 
-.eskie-category-header {
+.cn-category-header {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -138,12 +138,12 @@
     transition: background 0.2s ease !important;
 }
 
-.eskie-category-header.cn-collapsible {
+.cn-category-header.cn-collapsible {
     cursor: pointer !important;
     user-select: none !important;
 }
 
-.eskie-category-header.cn-collapsible:hover {
+.cn-category-header.cn-collapsible:hover {
     background: rgba(223, 169, 81, 0.22) !important;
 }
 
@@ -153,13 +153,13 @@
     gap: 8px !important;
 }
 
-.eskie-category-header i {
+.cn-category-header i {
     font-size: 0.95rem !important;
     color: #dfa951 !important;
     text-shadow: 0 0 6px rgba(223, 169, 81, 0.4) !important;
 }
 
-.eskie-category-header h3 {
+.cn-category-header h3 {
     margin: 0 !important;
     font-size: 0.88rem !important;
     font-weight: 700 !important;
@@ -176,18 +176,18 @@
     transition: transform 0.25s ease !important;
 }
 
-.eskie-category-header.cn-collapsible.collapsed .cn-category-chevron {
+.cn-category-header.cn-collapsible.collapsed .cn-category-chevron {
     transform: rotate(-90deg) !important;
 }
 
-/* Compact Module Cards */
-.eskie-recommended-modules-list {
+/* Compact Option Cards */
+.cn-module-list {
     display: flex !important;
     flex-direction: column !important;
     gap: 4px !important;
 }
 
-.eskie-module-card {
+.cn-option-card {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -200,19 +200,17 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
-.eskie-module-card[style*="display: none"],
-.eskie-module-card.hidden,
-.form-group-font-other.hidden,
-.form-group-font-other[style*="display: none"] {
+.cn-option-card[style*="display: none"],
+.cn-option-card.hidden {
     display: none !important;
 }
 
-.eskie-module-card:hover {
+.cn-option-card:hover {
     border-color: rgba(223, 169, 81, 0.4) !important;
     background: rgba(20, 20, 24, 0.8) !important;
 }
 
-.eskie-card-icon-wrapper {
+.cn-card-icon-wrapper {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -225,7 +223,7 @@
     flex-shrink: 0 !important;
 }
 
-.eskie-card-details {
+.cn-card-details {
     flex-grow: 1 !important;
     display: flex !important;
     flex-direction: column !important;
@@ -233,7 +231,7 @@
     gap: 1px !important;
 }
 
-.eskie-card-title {
+.cn-card-title {
     margin: 0 !important;
     font-size: 0.88rem !important;
     font-weight: 600 !important;
@@ -243,7 +241,7 @@
     font-family: "Signika", sans-serif !important;
 }
 
-.eskie-card-description {
+.cn-card-description {
     margin: 0 !important;
     font-size: 0.75rem !important;
     color: #c9b896 !important;
@@ -251,7 +249,7 @@
 }
 
 /* Card Controls */
-.eskie-card-control {
+.cn-card-control {
     flex-shrink: 0 !important;
     display: flex !important;
     align-items: center !important;
@@ -259,7 +257,7 @@
     gap: 8px !important;
 }
 
-.eskie-card-control.inline-toggles {
+.cn-card-control.inline-toggles {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -278,8 +276,8 @@
     font-weight: 500 !important;
 }
 
-.eskie-card-control input[type="text"],
-.eskie-card-control select {
+.cn-card-control input[type="text"],
+.cn-card-control select {
     background: rgba(10, 10, 12, 0.75) !important;
     border: 1px solid rgba(223, 169, 81, 0.35) !important;
     border-radius: 4px !important;
@@ -292,14 +290,14 @@
     box-sizing: border-box !important;
 }
 
-.eskie-card-control input[type="text"]:focus,
-.eskie-card-control select:focus {
+.cn-card-control input[type="text"]:focus,
+.cn-card-control select:focus {
     border-color: #dfa951 !important;
     box-shadow: 0 0 6px rgba(223, 169, 81, 0.4) !important;
     outline: none !important;
 }
 
-.eskie-card-control input[type="color"] {
+.cn-card-control input[type="color"] {
     width: 28px !important;
     height: 26px !important;
     padding: 0 !important;
@@ -310,12 +308,12 @@
     flex-shrink: 0 !important;
 }
 
-.eskie-card-control input[type="range"] {
+.cn-card-control input[type="range"] {
     width: 100px !important;
     accent-color: #dfa951 !important;
 }
 
-.eskie-card-control .range-value {
+.cn-card-control .range-value {
     font-size: 0.76rem !important;
     font-weight: 700 !important;
     color: #dfa951 !important;
@@ -328,7 +326,7 @@
 }
 
 /* Compact iOS Switch (Tan / Gold Accent) */
-.eskie-switch {
+.cn-switch {
     position: relative !important;
     display: inline-block !important;
     width: 36px !important;
@@ -336,13 +334,13 @@
     margin: 0 !important;
 }
 
-.eskie-switch input {
+.cn-switch input {
     opacity: 0 !important;
     width: 0 !important;
     height: 0 !important;
 }
 
-.eskie-slider {
+.cn-slider {
     position: absolute !important;
     cursor: pointer !important;
     top: 0 !important;
@@ -355,7 +353,7 @@
     border: 1px solid rgba(223, 169, 81, 0.2) !important;
 }
 
-.eskie-slider:before {
+.cn-slider:before {
     position: absolute !important;
     content: "" !important;
     height: 14px !important;
@@ -368,12 +366,12 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.4) !important;
 }
 
-input:checked + .eskie-slider {
+input:checked + .cn-slider {
     background-color: #8c6a34 !important;
     border-color: #c09648 !important;
 }
 
-input:checked + .eskie-slider:before {
+input:checked + .cn-slider:before {
     transform: translateX(16px) !important;
     background-color: #f0e6d2 !important;
 }
@@ -451,7 +449,7 @@ input:checked + .eskie-slider:before {
 }
 
 /* Footer & Action Buttons */
-.eskie-world-scripts-footer {
+.cn-config-footer {
     display: flex !important;
     justify-content: flex-end !important;
     gap: 8px !important;
@@ -460,7 +458,7 @@ input:checked + .eskie-slider:before {
     border-top: 1px solid rgba(223, 169, 81, 0.15) !important;
 }
 
-.eskie-btn-primary {
+.cn-btn-primary {
     background: linear-gradient(135deg, #782e22 0%, #5a2219 100%) !important;
     color: #f0e6d2 !important;
     border: 1px solid #a23f30 !important;
@@ -479,13 +477,13 @@ input:checked + .eskie-slider:before {
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3) !important;
 }
 
-.eskie-btn-primary:hover {
+.cn-btn-primary:hover {
     background: linear-gradient(135deg, #94392a 0%, #782e22 100%) !important;
     box-shadow: 0 4px 8px rgba(120, 46, 34, 0.4) !important;
     transform: translateY(-0.5px) !important;
 }
 
-.eskie-btn-secondary {
+.cn-btn-secondary {
     background: rgba(45, 42, 38, 0.7) !important;
     color: #c9b896 !important;
     border: 1px solid rgba(223, 169, 81, 0.25) !important;
@@ -503,7 +501,7 @@ input:checked + .eskie-slider:before {
     line-height: normal !important;
 }
 
-.eskie-btn-secondary:hover {
+.cn-btn-secondary:hover {
     background: rgba(60, 56, 50, 0.85) !important;
     border-color: rgba(223, 169, 81, 0.4) !important;
     color: #f0e6d2 !important;
