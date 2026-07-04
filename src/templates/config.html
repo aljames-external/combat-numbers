@@ -63,7 +63,6 @@
                     </div>
                     <div class="eskie-card-details">
                         <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.labelFontSize"}}</h3>
-                        <p class="eskie-card-description">{{localize "COMBATNUMBERS.SETTINGS.fontSizeHint"}}</p>
                     </div>
                     <div class="eskie-card-control">
                         <select name="fontSize" id="cnFontSizeSelect">
@@ -72,33 +71,29 @@
                     </div>
                 </div>
 
-                <div class="eskie-module-card">
-                    <div class="eskie-card-icon-wrapper">
-                        <i class="fa-solid fa-bold"></i>
-                    </div>
-                    <div class="eskie-card-details">
-                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.bold"}}</h3>
-                    </div>
-                    <div class="eskie-card-control">
-                        <label class="eskie-switch">
-                            <input type="checkbox" name="bold" id="cnBoldToggle" {{checked bold}} />
-                            <span class="eskie-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
+                <!-- Combined Bold & Italic Row -->
                 <div class="eskie-module-card">
                     <div class="eskie-card-icon-wrapper">
                         <i class="fa-solid fa-italic"></i>
                     </div>
                     <div class="eskie-card-details">
-                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.italic"}}</h3>
+                        <h3 class="eskie-card-title">{{localize "COMBATNUMBERS.SETTINGS.bold"}} & {{localize "COMBATNUMBERS.SETTINGS.italic"}}</h3>
                     </div>
-                    <div class="eskie-card-control">
-                        <label class="eskie-switch">
-                            <input type="checkbox" name="italic" id="cnItalicToggle" {{checked italic}} />
-                            <span class="eskie-slider"></span>
-                        </label>
+                    <div class="eskie-card-control inline-toggles">
+                        <div class="toggle-group">
+                            <span class="toggle-label">{{localize "COMBATNUMBERS.SETTINGS.bold"}}</span>
+                            <label class="eskie-switch">
+                                <input type="checkbox" name="bold" id="cnBoldToggle" {{checked bold}} />
+                                <span class="eskie-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-group">
+                            <span class="toggle-label">{{localize "COMBATNUMBERS.SETTINGS.italic"}}</span>
+                            <label class="eskie-switch">
+                                <input type="checkbox" name="italic" id="cnItalicToggle" {{checked italic}} />
+                                <span class="eskie-slider"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>

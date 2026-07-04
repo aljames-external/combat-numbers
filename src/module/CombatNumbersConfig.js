@@ -201,8 +201,9 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
    * @param {jQuery} html
    */
   updatePreview(html) {
-    const selectedFontKey = parseInt(html.find('select[name="font"]').val(), 10);
-    const font = this._getSelectedFont(selectedFontKey, {
+    const rawFontVal = html.find('select[name="font"]').val();
+    const selectedFontKey = parseInt(rawFontVal, 10);
+    const font = this._getSelectedFont(isNaN(selectedFontKey) ? rawFontVal : selectedFontKey, {
       fontOther: html.find('#fontOther').val(),
     });
 
@@ -384,7 +385,10 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
    */
   _getSelectedFont(selectedFontKey, formData) {
     const fontList = this._getFontList();
-    const selected = fontList[selectedFontKey];
+    let selected = fontList[selectedFontKey];
+    if (!selected) {
+      selected = fontList.find((f) => f === selectedFontKey) ?? selectedFontKey;
+    }
 
     if (selected === this.fontOther) {
       if (!formData?.fontOther) {
@@ -394,6 +398,6 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
       return String(formData.fontOther).trim();
     }
 
-    return selected;
+    return selected || CombatNumbersConfig.DEFAULT_APPEARANCE.font;
   }
 }
