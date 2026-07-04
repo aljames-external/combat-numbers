@@ -1,7 +1,8 @@
 /* ============================================================================
-   COMBAT NUMBERS - DEBUG CONFIG MENU (EMP/BAD DESIGN SYSTEM VERBATIM)
+   COMBAT NUMBERS - DEBUG CONFIG MENU (APPLICATION V2 + EMP/BAD STYLING)
    ============================================================================ */
 
+.eskie-world-scripts-form,
 .eskie-world-scripts-form .window-content {
     background: #1a1a1e url("../../../ui/denim.png") repeat !important;
     color: #f0f0f0;

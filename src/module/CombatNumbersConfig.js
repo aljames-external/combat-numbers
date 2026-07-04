@@ -1,17 +1,25 @@
-import Constants from './Constants.js';
+import { ApplicationV2, HandlebarsApplicationMixin } from '../lib/compat.js';
 
-export default class CombatNumbersConfig extends FormApplication {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: 'combat-numbers-config',
+export default class CombatNumbersConfig extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    id: 'combat-numbers-config',
+    classes: ['eskie-world-scripts-form', 'eskie-recommended-modules-form'],
+    tag: 'form',
+    window: {
       title: 'Combat Numbers Debug',
-      template: 'modules/combat-numbers/src/templates/config.html',
-      classes: ['eskie-world-scripts-form', 'eskie-recommended-modules-form'],
+      icon: 'fa-solid fa-palette',
+    },
+    position: {
       width: 620,
       height: 'auto',
-      closeOnSubmit: true,
-    });
-  }
+    },
+  };
+
+  static PARTS = {
+    form: {
+      template: 'modules/combat-numbers/src/templates/config.html',
+    },
+  };
 
   /**
    * The default appearance settings object.
@@ -70,16 +78,13 @@ export default class CombatNumbersConfig extends FormApplication {
     };
   }
 
-  async getData(options) {
+  /** @override */
+  async _prepareContext(options) {
     const system = game.system;
     return {
       systemTitle: system.title,
       systemId: system.id,
       systemVersion: system.version,
     };
-  }
-
-  async _updateObject(event, formData) {
-    return;
   }
 }
