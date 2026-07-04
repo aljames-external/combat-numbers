@@ -1,19 +1,12 @@
 import { localize } from '../lib/utils.js';
-import { ApplicationV2, HandlebarsApplicationMixin } from '../lib/compat.js';
 import Constants from './Constants.js';
+
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
  * Configure appearance settings of Combat Numbers in ApplicationV2.
  */
 export default class CombatNumbersConfig extends HandlebarsApplicationMixin(ApplicationV2) {
-  constructor(object, options) {
-    let opts = options;
-    if (!opts && object && typeof object === 'object') {
-      opts = object;
-    }
-    super(opts || {});
-  }
-
   static DEFAULT_OPTIONS = {
     id: 'combat-numbers-config',
     classes: ['cn-config-form', 'cn-appearance-form'],
