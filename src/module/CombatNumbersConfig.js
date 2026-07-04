@@ -6,11 +6,6 @@ import Constants from './Constants.js';
  * Configure appearance settings of Combat Numbers in ApplicationV2.
  */
 export default class CombatNumbersConfig extends HandlebarsApplicationMixin(ApplicationV2) {
-  constructor(options = {}) {
-    super(options);
-    this.fontOther = 'Custom';
-  }
-
   static DEFAULT_OPTIONS = {
     id: 'combat-numbers-config',
     classes: ['eskie-world-scripts-form', 'eskie-recommended-modules-form'],
@@ -57,9 +52,9 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
   }
 
   /**
-   * The built-in font families to choose from.
+   * Dynamically query all available font families in Foundry VTT.
    *
-   * @return {array}
+   * @return {Array<string>}
    */
   static get FONT_FAMILIES() {
     const defaultFonts = [
@@ -118,19 +113,23 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance') || CombatNumbersConfig.DEFAULT_APPEARANCE;
     const defaultAppearance = CombatNumbersConfig.DEFAULT_APPEARANCE;
 
-    const fontName = appearance.font ?? defaultAppearance.font;
-    const fontKey = String(this._getFontKeyByName(fontName));
+    const currentFont = appearance.font ?? defaultAppearance.font;
+    const availableFonts = CombatNumbersConfig.FONT_FAMILIES;
+
+    if (!availableFonts.includes(currentFont)) {
+      availableFonts.push(currentFont);
+      availableFonts.sort((a, b) => a.localeCompare(b));
+    }
 
     const fontListObj = {};
-    this._getFontList().forEach((fName, idx) => {
-      fontListObj[idx] = fName;
+    availableFonts.forEach((fName) => {
+      fontListObj[fName] = fName;
     });
 
     return {
       fontList: fontListObj,
       fontSizeList: CombatNumbersConfig.FONT_SIZES,
-      font: fontKey,
-      fontOther: fontName,
+      font: currentFont,
       fontSize: appearance.fontSize ?? defaultAppearance.fontSize,
       bold: appearance.bold ?? defaultAppearance.bold,
       italic: appearance.italic ?? defaultAppearance.italic,
@@ -149,32 +148,9 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     const html = $(this.element);
 
     const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance') || CombatNumbersConfig.DEFAULT_APPEARANCE;
-    const fontKey = this._getFontKeyByName(appearance.font);
+    html.find('select[name="font"]').val(appearance.font);
 
-    html.find('select[name="font"]').val(fontKey);
-
-    const fontOtherFormGroup = html.find('.form-group-font-other');
-    const fontOther = html.find('#fontOther');
-
-    if (this._getFontList()[fontKey] === this.fontOther) {
-      fontOtherFormGroup.removeClass('hidden').show();
-      fontOther.val(appearance.font);
-    } else {
-      fontOtherFormGroup.addClass('hidden').hide();
-      fontOther.val('');
-    }
-
-    html.find('select[name="font"]').on('change input', (e) => {
-      const selectedVal = $(e.currentTarget).val();
-      const fontList = this._getFontList();
-      const selectedFontName = fontList[selectedVal] ?? $(e.currentTarget).find('option:selected').text();
-      
-      if (selectedFontName === this.fontOther || selectedVal === String(fontList.indexOf(this.fontOther))) {
-        fontOtherFormGroup.removeClass('hidden').slideDown(150);
-      } else {
-        fontOther.val('');
-        fontOtherFormGroup.addClass('hidden').slideUp(150);
-      }
+    html.find('select[name="font"]').on('change input', () => {
       this.updatePreview(html);
     });
 
@@ -215,7 +191,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     });
 
     // Other inputs triggering preview update
-    html.find('#cnFontSizeSelect, #cnBoldToggle, #cnItalicToggle, #fontOther').on('input change', () => {
+    html.find('#cnFontSizeSelect, #cnBoldToggle, #cnItalicToggle').on('input change', () => {
       this.updatePreview(html);
     });
 
@@ -233,11 +209,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
    * @param {jQuery} html
    */
   updatePreview(html) {
-    const rawFontVal = html.find('select[name="font"]').val();
-    const selectedFontKey = parseInt(rawFontVal, 10);
-    const font = this._getSelectedFont(isNaN(selectedFontKey) ? rawFontVal : selectedFontKey, {
-      fontOther: html.find('#fontOther').val(),
-    });
+    const font = html.find('select[name="font"]').val() || CombatNumbersConfig.DEFAULT_APPEARANCE.font;
 
     const fontSizeKey = html.find('select[name="fontSize"]').val();
     const fontSizeMap = {
@@ -300,16 +272,9 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
    */
   static async onSubmitForm(event, form, formData) {
     const data = formData.object;
-    const fontList = CombatNumbersConfig.prototype._getFontList();
-    const selectedFontKey = parseInt(data.font, 10);
-    let selectedFont = fontList[selectedFontKey];
-
-    if (selectedFont === 'Custom' || selectedFont === 'Other') {
-      selectedFont = data.fontOther ? String(data.fontOther).trim() : CombatNumbersConfig.DEFAULT_APPEARANCE.font;
-    }
 
     const appearance = {
-      font: selectedFont,
+      font: data.font,
       fontSize: data.fontSize,
       bold: !!data.bold,
       italic: !!data.italic,
@@ -336,11 +301,8 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
    */
   reset(html) {
     const defaultAppearance = CombatNumbersConfig.DEFAULT_APPEARANCE;
-    const fontKey = this._getFontKeyByName(defaultAppearance.font);
 
-    html.find('select[name="font"]').val(fontKey);
-    html.find('.form-group-font-other').hide();
-    html.find('#fontOther').val('');
+    html.find('select[name="font"]').val(defaultAppearance.font);
     html.find('select[name="fontSize"]').val(defaultAppearance.fontSize);
     html.find('#cnBoldToggle').prop('checked', defaultAppearance.bold);
     html.find('#cnItalicToggle').prop('checked', defaultAppearance.italic);
@@ -361,75 +323,5 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     html.find('#cnDropShadowAlphaValue').text(defaultAppearance.dropShadowAlpha);
 
     this.updatePreview(html);
-  }
-
-  /**
-   * Get the numeric font key by the font name itself.
-   *
-   * @param {string} name
-   *   The font name. Ex: "Verdana".
-   *
-   * @return {number}
-   *   The font key in our array.
-   *
-   * @private
-   */
-  _getFontKeyByName(name) {
-    const fontList = this._getFontList();
-    const foundFontKey = fontList.findIndex(
-      (font) => font === name,
-    );
-
-    if (foundFontKey === -1) {
-      return fontList.findIndex(
-        (font) => font === this.fontOther,
-      );
-    }
-
-    return foundFontKey;
-  }
-
-  /**
-   * Get the font list to display in the configuration dialog.
-   *
-   * @return {Array}
-   *
-   * @private
-   */
-  _getFontList() {
-    const fonts = [...CombatNumbersConfig.FONT_FAMILIES];
-    fonts.push(this.fontOther);
-
-    return fonts;
-  }
-
-  /**
-   * Get the selected font by the selected key from the font list.
-   *
-   * @param {number|string} selectedFontKey
-   *   The selected key of the font list.
-   * @param formData {Object}
-   *   The object of validated form data with which to update the object.
-   *
-   * @return {string}
-   *
-   * @private
-   */
-  _getSelectedFont(selectedFontKey, formData) {
-    const fontList = this._getFontList();
-    let selected = fontList[selectedFontKey];
-    if (!selected) {
-      selected = fontList.find((f) => f === selectedFontKey) ?? selectedFontKey;
-    }
-
-    if (selected === this.fontOther || selected === 'Other') {
-      if (!formData?.fontOther) {
-        return CombatNumbersConfig.DEFAULT_APPEARANCE.font;
-      }
-
-      return String(formData.fontOther).trim();
-    }
-
-    return selected || CombatNumbersConfig.DEFAULT_APPEARANCE.font;
   }
 }
