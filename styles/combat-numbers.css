@@ -1,0 +1,508 @@
+/* ============================================================================
+   COMBAT NUMBERS - FOUNDRY VTT TRANSLUCENT GLASSY + TAN TYPOGRAPHY THEME
+   ============================================================================ */
+
+/* Outer Application Window Frame in ApplicationV2 */
+.application.cn-config-form,
+#combat-numbers-config {
+    background: rgba(26, 26, 30, 0.88) url("../../../ui/denim.png") repeat !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(223, 169, 81, 0.35) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(223, 169, 81, 0.12) !important;
+    color: #f0e6d2 !important;
+    font-family: "Signika", sans-serif !important;
+    overflow: hidden !important;
+}
+
+/* Window Header Styling */
+.application.cn-config-form .window-header,
+#combat-numbers-config .window-header {
+    background: rgba(20, 20, 24, 0.9) !important;
+    border-bottom: 1px solid rgba(223, 169, 81, 0.3) !important;
+    padding: 6px 12px !important;
+}
+
+.application.cn-config-form .window-title,
+#combat-numbers-config .window-title {
+    color: #f0e6d2 !important;
+    font-family: "Signika", sans-serif !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 6px rgba(223, 169, 81, 0.3) !important;
+}
+
+.application.cn-config-form .window-icon,
+#combat-numbers-config .window-icon {
+    color: #dfa951 !important;
+}
+
+.application.cn-config-form .header-control,
+#combat-numbers-config .header-control {
+    color: #c9b896 !important;
+}
+
+.application.cn-config-form .header-control:hover,
+#combat-numbers-config .header-control:hover {
+    color: #ffffff !important;
+}
+
+/* Window Body & Form Container */
+.application.cn-config-form .window-body,
+.application.cn-config-form .window-content,
+.application.cn-config-form form,
+#combat-numbers-config .window-body,
+#combat-numbers-config form {
+    background: transparent !important;
+    padding: 12px !important;
+    color: #f0e6d2 !important;
+    font-family: "Signika", sans-serif !important;
+    box-sizing: border-box !important;
+}
+
+/* Container */
+.cn-config-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+}
+
+/* Inner Banner Header */
+.cn-config-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 2px 0 !important;
+}
+
+.cn-header-icon {
+    font-size: 1.8rem !important;
+    color: #dfa951 !important;
+    text-shadow: 0 0 10px rgba(223, 169, 81, 0.35) !important;
+    flex-shrink: 0 !important;
+}
+
+.cn-header-text h2 {
+    margin: 0 !important;
+    border: none !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #f0e6d2 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+    font-family: "Signika", sans-serif !important;
+}
+
+.cn-header-text p.notes {
+    margin: 1px 0 0 0 !important;
+    font-size: 0.8rem !important;
+    color: #c9b896 !important;
+    line-height: 1.25 !important;
+}
+
+.cn-config-container hr {
+    border: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(to right, rgba(223, 169, 81, 0), rgba(223, 169, 81, 0.35), rgba(223, 169, 81, 0)) !important;
+    margin: 2px 0 !important;
+}
+
+/* Scroll Area & Small Gaps */
+.cn-scroll-area {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    max-height: 480px !important;
+    overflow-y: auto !important;
+    padding-right: 4px !important;
+}
+
+/* Category Group */
+.cn-category-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.cn-category-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 6px 10px !important;
+    background: rgba(223, 169, 81, 0.12) !important;
+    border-left: 3px solid #dfa951 !important;
+    border-radius: 4px !important;
+    margin-bottom: 2px !important;
+    transition: background 0.2s ease !important;
+}
+
+.cn-category-header.cn-collapsible {
+    cursor: pointer !important;
+    user-select: none !important;
+}
+
+.cn-category-header.cn-collapsible:hover {
+    background: rgba(223, 169, 81, 0.22) !important;
+}
+
+.category-header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.cn-category-header i {
+    font-size: 0.95rem !important;
+    color: #dfa951 !important;
+    text-shadow: 0 0 6px rgba(223, 169, 81, 0.4) !important;
+}
+
+.cn-category-header h3 {
+    margin: 0 !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: #f0e6d2 !important;
+    border: none !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    font-family: "Signika", sans-serif !important;
+}
+
+.cn-category-chevron {
+    font-size: 0.82rem !important;
+    color: #dfa951 !important;
+    transition: transform 0.25s ease !important;
+}
+
+.cn-category-header.cn-collapsible.collapsed .cn-category-chevron {
+    transform: rotate(-90deg) !important;
+}
+
+/* Compact Option Cards */
+.cn-module-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.cn-option-card {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    background: rgba(20, 20, 24, 0.6) !important;
+    border: 1px solid rgba(223, 169, 81, 0.15) !important;
+    border-radius: 6px !important;
+    padding: 5px 10px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.cn-option-card[style*="display: none"],
+.cn-option-card.hidden {
+    display: none !important;
+}
+
+.cn-option-card:hover {
+    border-color: rgba(223, 169, 81, 0.4) !important;
+    background: rgba(20, 20, 24, 0.8) !important;
+}
+
+.cn-card-icon-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    background: rgba(223, 169, 81, 0.1) !important;
+    border-radius: 50% !important;
+    color: #dfa951 !important;
+    font-size: 0.95rem !important;
+    flex-shrink: 0 !important;
+}
+
+.cn-card-details {
+    flex-grow: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 1px !important;
+}
+
+.cn-card-title {
+    margin: 0 !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    color: #f0e6d2 !important;
+    border: none !important;
+    line-height: 28px !important;
+    font-family: "Signika", sans-serif !important;
+}
+
+.cn-card-description {
+    margin: 0 !important;
+    font-size: 0.75rem !important;
+    color: #c9b896 !important;
+    line-height: 1.2 !important;
+}
+
+/* Card Controls */
+.cn-card-control {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+}
+
+.cn-card-control.inline-toggles {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+.toggle-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.toggle-label {
+    font-size: 0.82rem !important;
+    color: #c9b896 !important;
+    font-weight: 500 !important;
+}
+
+.cn-card-control input[type="text"],
+.cn-card-control select {
+    background: rgba(10, 10, 12, 0.75) !important;
+    border: 1px solid rgba(223, 169, 81, 0.35) !important;
+    border-radius: 4px !important;
+    color: #f0e6d2 !important;
+    padding: 2px 6px !important;
+    font-size: 0.84rem !important;
+    font-family: "Signika", sans-serif !important;
+    height: 26px !important;
+    min-width: 130px !important;
+    box-sizing: border-box !important;
+}
+
+.cn-card-control input[type="text"]:focus,
+.cn-card-control select:focus {
+    border-color: #dfa951 !important;
+    box-shadow: 0 0 6px rgba(223, 169, 81, 0.4) !important;
+    outline: none !important;
+}
+
+.cn-card-control input[type="color"] {
+    width: 28px !important;
+    height: 26px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(223, 169, 81, 0.35) !important;
+    border-radius: 4px !important;
+    background: none !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+}
+
+.cn-card-control input[type="range"] {
+    width: 100px !important;
+    accent-color: #dfa951 !important;
+}
+
+.cn-card-control .range-value {
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    color: #dfa951 !important;
+    background: rgba(223, 169, 81, 0.12) !important;
+    border: 1px solid rgba(223, 169, 81, 0.3) !important;
+    padding: 1px 5px !important;
+    border-radius: 4px !important;
+    min-width: 26px !important;
+    text-align: center !important;
+}
+
+/* Compact iOS Switch (Tan / Gold Accent) */
+.cn-switch {
+    position: relative !important;
+    display: inline-block !important;
+    width: 36px !important;
+    height: 20px !important;
+    margin: 0 !important;
+}
+
+.cn-switch input {
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.cn-slider {
+    position: absolute !important;
+    cursor: pointer !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background-color: #3a3832 !important;
+    transition: .2s !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(223, 169, 81, 0.2) !important;
+}
+
+.cn-slider:before {
+    position: absolute !important;
+    content: "" !important;
+    height: 14px !important;
+    width: 14px !important;
+    left: 2px !important;
+    bottom: 2px !important;
+    background-color: #c9b896 !important;
+    transition: .2s !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4) !important;
+}
+
+input:checked + .cn-slider {
+    background-color: #8c6a34 !important;
+    border-color: #c09648 !important;
+}
+
+input:checked + .cn-slider:before {
+    transform: translateX(16px) !important;
+    background-color: #f0e6d2 !important;
+}
+
+/* Live Preview Stage Card */
+.cn-preview-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(20, 20, 24, 0.65) !important;
+    border: 1px solid rgba(223, 169, 81, 0.25) !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25) !important;
+}
+
+.cn-preview-badge {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    color: #dfa951 !important;
+    background: rgba(223, 169, 81, 0.12) !important;
+    border: 1px solid rgba(223, 169, 81, 0.3) !important;
+    border-radius: 4px !important;
+    padding: 2px 6px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 6px !important;
+}
+
+.cn-preview-stage {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.cn-token-box {
+    width: 95px !important;
+    height: 95px !important;
+    border: 2px dashed rgba(223, 169, 81, 0.5) !important;
+    border-radius: 8px !important;
+    background: rgba(10, 10, 14, 0.8) !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7) !important;
+    overflow: hidden !important;
+}
+
+.cn-token-icon {
+    font-size: 2.4rem !important;
+    color: rgba(223, 169, 81, 0.2) !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
+
+.cn-preview-sample {
+    position: absolute !important;
+    user-select: none !important;
+    white-space: nowrap !important;
+}
+
+.cn-preview-damage {
+    top: 8px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+.cn-preview-heal {
+    bottom: 8px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+/* Footer & Action Buttons */
+.cn-config-footer {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    margin-top: 6px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid rgba(223, 169, 81, 0.15) !important;
+}
+
+.cn-btn-primary {
+    background: linear-gradient(135deg, #782e22 0%, #5a2219 100%) !important;
+    color: #f0e6d2 !important;
+    border: 1px solid #a23f30 !important;
+    border-radius: 6px !important;
+    padding: 7px 16px !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    height: auto !important;
+    line-height: normal !important;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3) !important;
+}
+
+.cn-btn-primary:hover {
+    background: linear-gradient(135deg, #94392a 0%, #782e22 100%) !important;
+    box-shadow: 0 4px 8px rgba(120, 46, 34, 0.4) !important;
+    transform: translateY(-0.5px) !important;
+}
+
+.cn-btn-secondary {
+    background: rgba(45, 42, 38, 0.7) !important;
+    color: #c9b896 !important;
+    border: 1px solid rgba(223, 169, 81, 0.25) !important;
+    border-radius: 6px !important;
+    padding: 7px 14px !important;
+    font-size: 0.86rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    height: auto !important;
+    line-height: normal !important;
+}
+
+.cn-btn-secondary:hover {
+    background: rgba(60, 56, 50, 0.85) !important;
+    border-color: rgba(223, 169, 81, 0.4) !important;
+    color: #f0e6d2 !important;
+}

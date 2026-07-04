@@ -38,6 +38,9 @@
   "esmodules": [
     "src/module.js"
   ],
+  "styles": [
+    "styles/combat-numbers.css"
+  ],
   "socket": true,
   "url": "https://github.com/aljames-external/combat-numbers",
   "license": "MIT",
