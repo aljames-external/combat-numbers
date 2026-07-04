@@ -1,5 +1,5 @@
 /* ============================================================================
-   COMBAT NUMBERS - APPLICATION V2 + EMP/BAD DESIGN SYSTEM (COMPACT LAYOUT)
+   COMBAT NUMBERS - APPLICATION V2 + EMP/BAD DESIGN SYSTEM (COMPACT & COLLAPSIBLE)
    ============================================================================ */
 
 /* Outer Application Window Frame in ApplicationV2 */
@@ -121,12 +121,29 @@
 .eskie-category-header {
     display: flex !important;
     align-items: center !important;
+    justify-content: space-between !important;
     gap: 8px !important;
-    padding: 4px 10px !important;
+    padding: 6px 10px !important;
     background: rgba(167, 139, 250, 0.1) !important;
     border-left: 3px solid #a78bfa !important;
     border-radius: 4px !important;
     margin-bottom: 2px !important;
+    transition: background 0.2s ease !important;
+}
+
+.eskie-category-header.cn-collapsible {
+    cursor: pointer !important;
+    user-select: none !important;
+}
+
+.eskie-category-header.cn-collapsible:hover {
+    background: rgba(167, 139, 250, 0.18) !important;
+}
+
+.category-header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
 }
 
 .eskie-category-header i {
@@ -146,11 +163,21 @@
     font-family: "Signika", sans-serif !important;
 }
 
+.cn-category-chevron {
+    font-size: 0.82rem !important;
+    color: #a78bfa !important;
+    transition: transform 0.25s ease !important;
+}
+
+.eskie-category-header.cn-collapsible.collapsed .cn-category-chevron {
+    transform: rotate(-90deg) !important;
+}
+
 /* Compact Module Cards */
 .eskie-recommended-modules-list {
     display: flex !important;
     flex-direction: column !important;
-    gap: 4px !important; /* Minimal gap between options */
+    gap: 4px !important;
 }
 
 .eskie-module-card {
@@ -161,7 +188,7 @@
     background: rgba(30, 30, 36, 0.55) !important;
     border: 1px solid rgba(167, 139, 250, 0.12) !important;
     border-radius: 6px !important;
-    padding: 5px 10px !important; /* Compact vertical height */
+    padding: 5px 10px !important;
     transition: all 0.2s ease !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
@@ -198,7 +225,7 @@
     font-weight: 600 !important;
     color: #f8fafc !important;
     border: none !important;
-    line-height: 28px !important; /* Match icon height */
+    line-height: 28px !important;
     font-family: "Signika", sans-serif !important;
 }
 

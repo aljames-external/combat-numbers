@@ -8,7 +8,7 @@ import Constants from './Constants.js';
 export default class CombatNumbersConfig extends HandlebarsApplicationMixin(ApplicationV2) {
   constructor(options = {}) {
     super(options);
-    this.fontOther = localize('COMBATNUMBERS.SETTINGS.fontFamilyOther', 'Other');
+    this.fontOther = 'Custom';
   }
 
   static DEFAULT_OPTIONS = {
@@ -154,6 +154,14 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
       this.updatePreview(html);
     });
 
+    // Collapsible category section handlers
+    html.find('.eskie-category-header.cn-collapsible').click((e) => {
+      const header = $(e.currentTarget);
+      const list = header.next('.eskie-recommended-modules-list');
+      header.toggleClass('collapsed');
+      list.slideToggle(200);
+    });
+
     // Synchronize color text inputs and color pickers
     const syncColorPair = (textInput, pickerInput) => {
       textInput.on('input change', () => {
@@ -272,7 +280,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     const selectedFontKey = parseInt(data.font, 10);
     let selectedFont = fontList[selectedFontKey];
 
-    if (selectedFont === localize('COMBATNUMBERS.SETTINGS.fontFamilyOther', 'Other')) {
+    if (selectedFont === 'Custom' || selectedFont === 'Other') {
       selectedFont = data.fontOther ? String(data.fontOther).trim() : CombatNumbersConfig.DEFAULT_APPEARANCE.font;
     }
 
@@ -374,7 +382,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
   /**
    * Get the selected font by the selected key from the font list.
    *
-   * @param {number} selectedFontKey
+   * @param {number|string} selectedFontKey
    *   The selected key of the font list.
    * @param formData {Object}
    *   The object of validated form data with which to update the object.
@@ -390,7 +398,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
       selected = fontList.find((f) => f === selectedFontKey) ?? selectedFontKey;
     }
 
-    if (selected === this.fontOther) {
+    if (selected === this.fontOther || selected === 'Other') {
       if (!formData?.fontOther) {
         return CombatNumbersConfig.DEFAULT_APPEARANCE.font;
       }
