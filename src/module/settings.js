@@ -48,7 +48,7 @@ export default () => {
   );
 
   // The Appearance settings menu and settings entry...
-  game.settings.registerMenu(Constants.MODULE_NAME, Constants.MODULE_NAME, {
+  game.settings.registerMenu(Constants.MODULE_NAME, 'appearanceMenu', {
     name: 'COMBATNUMBERS.SETTINGS.configName',
     label: 'COMBATNUMBERS.SETTINGS.configTitle',
     hint: 'COMBATNUMBERS.SETTINGS.configHint',
