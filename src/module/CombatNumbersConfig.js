@@ -62,7 +62,7 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
    * @return {array}
    */
   static get FONT_FAMILIES() {
-    return [
+    const defaultFonts = [
       'Verdana',
       'Arial',
       'Helvetica',
@@ -76,6 +76,13 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
       'Bradley Hand',
       'Luminari',
     ];
+
+    const foundryFonts = Array.isArray(CONFIG?.fontFamilies)
+      ? CONFIG.fontFamilies
+      : (CONFIG?.fontDefinitions ? Object.keys(CONFIG.fontDefinitions) : []);
+
+    const fontSet = new Set([...defaultFonts, ...foundryFonts]);
+    return Array.from(fontSet).sort((a, b) => a.localeCompare(b));
   }
 
   /**
