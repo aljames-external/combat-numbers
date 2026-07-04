@@ -31,10 +31,12 @@ let state;
 let masking;
 
 function registerStaticLayer() {
-  CONFIG.Canvas.layers.combatNumbers = {
-    layerClass: CombatNumberLayer,
-    group: 'effects',
-  };
+  if (CONFIG.Canvas?.layers) {
+    CONFIG.Canvas.layers.combatNumbers = {
+      layerClass: CombatNumberLayer,
+      group: 'effects',
+    };
+  }
 }
 
 /**

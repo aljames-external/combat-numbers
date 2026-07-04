@@ -153,7 +153,8 @@ export default class Appearance {
         modifier = 0.75;
         break;
       default:
-        throw new TypeError(`Cannot find a font size for font size setting "${this.fontSizeSetting}"`);
+        modifier = 0.3;
+        break;
     }
 
     return Math.round(this.gridSize * modifier);

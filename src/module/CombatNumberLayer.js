@@ -10,7 +10,8 @@ export default class CombatNumberLayer extends CanvasLayer {
    * @return {*}
    */
   static get layerOptions() {
-    return foundry.utils.mergeObject(super.layerOptions, {
+    const parentOpts = super.layerOptions || {};
+    return foundry.utils.mergeObject(parentOpts, {
       name: 'combatNumbers',
       canDragCreate: false,
       // This will set the combat numbers above the effects layer, but below
