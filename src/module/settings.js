@@ -63,11 +63,6 @@ export default () => {
     config: false,
     default: CombatNumbersConfig.DEFAULT_APPEARANCE,
     type: Object,
-    onChange: () => {
-      setTimeout(() => {
-        window.location.reload();
-      }, 200);
-    },
   });
 
   // All other normal settings...
