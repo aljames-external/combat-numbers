@@ -200,6 +200,13 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
+.eskie-module-card[style*="display: none"],
+.eskie-module-card.hidden,
+.form-group-font-other.hidden,
+.form-group-font-other[style*="display: none"] {
+    display: none !important;
+}
+
 .eskie-module-card:hover {
     border-color: rgba(223, 169, 81, 0.4) !important;
     background: rgba(20, 20, 24, 0.8) !important;

@@ -137,10 +137,10 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     const fontOther = html.find('#fontOther');
 
     if (this._getFontList()[fontKey] === this.fontOther) {
-      fontOtherFormGroup.show();
+      fontOtherFormGroup.removeClass('hidden').show();
       fontOther.val(appearance.font);
     } else {
-      fontOtherFormGroup.hide();
+      fontOtherFormGroup.addClass('hidden').hide();
       fontOther.val('');
     }
 
@@ -150,10 +150,10 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
       const selectedFontName = fontList[selectedVal] ?? $(e.currentTarget).find('option:selected').text();
       
       if (selectedFontName === this.fontOther || selectedVal === String(fontList.indexOf(this.fontOther))) {
-        fontOtherFormGroup.slideDown(150);
+        fontOtherFormGroup.removeClass('hidden').slideDown(150);
       } else {
         fontOther.val('');
-        fontOtherFormGroup.slideUp(150);
+        fontOtherFormGroup.addClass('hidden').slideUp(150);
       }
       this.updatePreview(html);
     });
