@@ -246,20 +246,20 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
       : 'none';
 
     const strokeStyle = (strokeThickness > 0)
-      ? `-webkit-text-stroke: ${strokeThickness * 0.5}px ${strokeColor}; paint-order: stroke fill;`
-      : '-webkit-text-stroke: none;';
+      ? `-webkit-text-stroke: ${strokeThickness * 0.5}px ${strokeColor} !important; paint-order: stroke fill !important;`
+      : '-webkit-text-stroke: none !important;';
 
     const baseStyle = `
-      font-family: '${font}', sans-serif;
-      font-size: ${fontSize}px;
-      font-weight: ${bold ? 'bold' : 'normal'};
-      font-style: ${italic ? 'italic' : 'normal'};
-      text-shadow: ${textShadow};
+      font-family: '${font}', sans-serif !important;
+      font-size: ${fontSize}px !important;
+      font-weight: ${bold ? 'bold' : 'normal'} !important;
+      font-style: ${italic ? 'italic' : 'normal'} !important;
+      text-shadow: ${textShadow} !important;
       ${strokeStyle}
     `;
 
-    html.find('#cnPreviewDamage').attr('style', `${baseStyle} color: ${damageColor};`);
-    html.find('#cnPreviewHeal').attr('style', `${baseStyle} color: ${healColor};`);
+    html.find('#cnPreviewDamage').attr('style', `${baseStyle} color: ${damageColor} !important;`);
+    html.find('#cnPreviewHeal').attr('style', `${baseStyle} color: ${healColor} !important;`);
   }
 
   /**

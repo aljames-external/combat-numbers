@@ -435,7 +435,6 @@ input:checked + .eskie-slider:before {
 .cn-preview-sample {
     position: absolute !important;
     user-select: none !important;
-    font-family: "Signika", sans-serif !important;
     white-space: nowrap !important;
 }
 
