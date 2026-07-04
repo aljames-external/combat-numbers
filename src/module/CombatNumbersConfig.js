@@ -77,9 +77,22 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
       'Luminari',
     ];
 
-    const foundryFonts = Array.isArray(CONFIG?.fontFamilies)
-      ? CONFIG.fontFamilies
-      : (CONFIG?.fontDefinitions ? Object.keys(CONFIG.fontDefinitions) : []);
+    let foundryFonts = [];
+    if (typeof FontConfig !== 'undefined' && typeof FontConfig.getAvailableFonts === 'function') {
+      try {
+        foundryFonts = Array.from(FontConfig.getAvailableFonts());
+      } catch (err) {
+        // Fallback if FontConfig throws
+      }
+    }
+
+    if (!foundryFonts.length && CONFIG?.fontDefinitions) {
+      foundryFonts = Object.keys(CONFIG.fontDefinitions);
+    }
+
+    if (CONFIG?.fontFamily && !foundryFonts.includes(CONFIG.fontFamily)) {
+      foundryFonts.push(CONFIG.fontFamily);
+    }
 
     const fontSet = new Set([...defaultFonts, ...foundryFonts]);
     return Array.from(fontSet).sort((a, b) => a.localeCompare(b));
