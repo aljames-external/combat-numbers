@@ -1,31 +1,35 @@
-/* global FormApplication */
-/* global jQuery */
-
 import { localize } from '../lib/utils.js';
+import { ApplicationV2, HandlebarsApplicationMixin } from '../lib/compat.js';
 import Constants from './Constants.js';
 
 /**
- * Form application to configure settings of Combat Numbers.
- *
- * Currently, specific to appearance settings.
+ * Configure appearance settings of Combat Numbers in ApplicationV2.
  */
-export default class CombatNumbersConfig extends FormApplication {
-  constructor(object = {}, options = {}) {
-    super(object, options);
-    this.fontOther = localize('COMBATNUMBERS.SETTINGS.fontFamilyOther', 'Other');
-  }
-
-  /** @override */
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      title: localize('COMBATNUMBERS.SETTINGS.configTitle', 'Configure Appearance'),
-      id: 'combat-numbers-config',
-      template: 'modules/combat-numbers/src/templates/config.html',
-      width: 500,
-      height: 588,
+export default class CombatNumbersConfig extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    id: 'combat-numbers-config',
+    classes: ['cn-config-form', 'cn-appearance-form'],
+    tag: 'form',
+    form: {
+      handler: CombatNumbersConfig.onSubmitForm,
       closeOnSubmit: true,
-    });
-  }
+    },
+    window: {
+      title: 'COMBATNUMBERS.SETTINGS.configTitle',
+      icon: 'fa-solid fa-palette',
+      resizable: false,
+    },
+    position: {
+      width: 620,
+      height: 'auto',
+    },
+  };
+
+  static PARTS = {
+    form: {
+      template: 'modules/combat-numbers/src/templates/config.html',
+    },
+  };
 
   /**
    * The default appearance settings object.
@@ -48,12 +52,12 @@ export default class CombatNumbersConfig extends FormApplication {
   }
 
   /**
-   * The built-in font families to choose from.
+   * Dynamically query all available font families in Foundry VTT.
    *
-   * @return {array}
+   * @return {Array<string>}
    */
   static get FONT_FAMILIES() {
-    return [
+    const defaultFonts = [
       'Verdana',
       'Arial',
       'Helvetica',
@@ -67,6 +71,26 @@ export default class CombatNumbersConfig extends FormApplication {
       'Bradley Hand',
       'Luminari',
     ];
+
+    let foundryFonts = [];
+    if (typeof FontConfig !== 'undefined' && typeof FontConfig.getAvailableFonts === 'function') {
+      try {
+        foundryFonts = Array.from(FontConfig.getAvailableFonts());
+      } catch (err) {
+        // Fallback if FontConfig throws
+      }
+    }
+
+    if (!foundryFonts.length && CONFIG?.fontDefinitions) {
+      foundryFonts = Object.keys(CONFIG.fontDefinitions);
+    }
+
+    if (CONFIG?.fontFamily && !foundryFonts.includes(CONFIG.fontFamily)) {
+      foundryFonts.push(CONFIG.fontFamily);
+    }
+
+    const fontSet = new Set([...defaultFonts, ...foundryFonts]);
+    return Array.from(fontSet).sort((a, b) => a.localeCompare(b));
   }
 
   /**
@@ -85,13 +109,28 @@ export default class CombatNumbersConfig extends FormApplication {
   }
 
   /** @override */
-  getData() {
-    const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance');
+  async _prepareContext(options) {
+    const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance') || CombatNumbersConfig.DEFAULT_APPEARANCE;
     const defaultAppearance = CombatNumbersConfig.DEFAULT_APPEARANCE;
-    const object = {
-      fontList: this._getFontList(),
+
+    const currentFont = appearance.font ?? defaultAppearance.font;
+    const availableFonts = CombatNumbersConfig.FONT_FAMILIES;
+
+    if (!availableFonts.includes(currentFont)) {
+      availableFonts.push(currentFont);
+      availableFonts.sort((a, b) => a.localeCompare(b));
+    }
+
+    const fontListObj = {};
+    availableFonts.forEach((fName) => {
+      fontListObj[fName] = fName;
+    });
+
+    return {
+      fontList: fontListObj,
       fontSizeList: CombatNumbersConfig.FONT_SIZES,
-      font: appearance.font ?? defaultAppearance.font,
+      font: currentFont,
+      fontSize: appearance.fontSize ?? defaultAppearance.fontSize,
       bold: appearance.bold ?? defaultAppearance.bold,
       italic: appearance.italic ?? defaultAppearance.italic,
       damageColor: appearance.damageColor ?? defaultAppearance.damageColor,
@@ -101,70 +140,151 @@ export default class CombatNumbersConfig extends FormApplication {
       dropShadowColor: appearance.dropShadowColor ?? defaultAppearance.dropShadowColor,
       dropShadowAlpha: appearance.dropShadowAlpha ?? defaultAppearance.dropShadowAlpha,
     };
-
-    return object;
   }
 
   /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
+  _onRender(context, options) {
+    super._onRender(context, options);
+    const html = $(this.element);
 
-    // Set up the form with the current settings values.
-    const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance');
-    const fontKey = this._getFontKeyByName(appearance.font);
+    const appearance = game.settings.get(Constants.MODULE_NAME, 'appearance') || CombatNumbersConfig.DEFAULT_APPEARANCE;
+    html.find('select[name="font"]').val(appearance.font);
 
-    html.find('select[name="font"]').val(fontKey);
-
-    const fontOtherFormGroup = html.find('.form-group-font-other');
-    const fontOther = html.find('#fontOther');
-
-    if (this._getFontList()[fontKey] === this.fontOther) {
-      fontOtherFormGroup.show();
-      fontOther.val(appearance.font);
-    }
-
-    const fontOtherName = this.fontOther;
-
-    html.find('select[name="font"]').change(function () {
-      const optionName = jQuery(this).find('option:selected').text();
-
-      if (optionName !== fontOtherName) {
-        fontOther.val('');
-        fontOtherFormGroup.hide();
-        return;
-      }
-
-      fontOtherFormGroup.show();
+    html.find('select[name="font"]').on('change input', () => {
+      this.updatePreview(html);
     });
 
-    const fontSize = appearance?.fontSize
-      ? appearance.fontSize
-      : CombatNumbersConfig.DEFAULT_APPEARANCE.fontSize;
+    // Collapsible category section handlers
+    html.find('.cn-category-header.cn-collapsible').click((e) => {
+      const header = $(e.currentTarget);
+      const list = header.next('.cn-module-list');
+      header.toggleClass('collapsed');
+      list.slideToggle(200);
+    });
 
-    html.find('select[name="fontSize"]').val(fontSize);
+    // Synchronize color text inputs and color pickers
+    const syncColorPair = (textInput, pickerInput) => {
+      textInput.on('input change', () => {
+        pickerInput.val(textInput.val());
+        this.updatePreview(html);
+      });
+      pickerInput.on('input change', () => {
+        textInput.val(pickerInput.val());
+        this.updatePreview(html);
+      });
+    };
 
-    html.find('button[name="reset"]').click(() => {
+    syncColorPair(html.find('#cnDamageColorInput'), html.find('#cnDamageColorPicker'));
+    syncColorPair(html.find('#cnHealColorInput'), html.find('#cnHealColorPicker'));
+    syncColorPair(html.find('#cnStrokeColorInput'), html.find('#cnStrokeColorPicker'));
+    syncColorPair(html.find('#cnDropShadowColorInput'), html.find('#cnDropShadowColorPicker'));
+
+    // Range slider value displays
+    html.find('#cnStrokeThicknessRange').on('input change', (e) => {
+      html.find('#cnStrokeThicknessValue').text(e.currentTarget.value);
+      this.updatePreview(html);
+    });
+
+    html.find('#cnDropShadowAlphaRange').on('input change', (e) => {
+      html.find('#cnDropShadowAlphaValue').text(e.currentTarget.value);
+      this.updatePreview(html);
+    });
+
+    // Other inputs triggering preview update
+    html.find('#cnFontSizeSelect, #cnBoldToggle, #cnItalicToggle').on('input change', () => {
+      this.updatePreview(html);
+    });
+
+    html.find('#cnResetBtn').click(() => {
       this.reset(html);
     });
+
+    // Initial preview render
+    this.updatePreview(html);
   }
 
-  /** @override */
-  async _updateObject(event, formData) {
-    const appearance = {};
+  /**
+   * Update the live preview stage with current form values.
+   *
+   * @param {jQuery} html
+   */
+  updatePreview(html) {
+    const font = html.find('select[name="font"]').val() || CombatNumbersConfig.DEFAULT_APPEARANCE.font;
 
-    appearance.font = this._getSelectedFont(
-      parseInt(formData.font, 10),
-      formData,
-    );
-    appearance.fontSize = formData.fontSize;
-    appearance.bold = formData.bold;
-    appearance.italic = formData.italic;
-    appearance.damageColor = formData.damageColor;
-    appearance.healColor = formData.healColor;
-    appearance.strokeColor = formData.strokeColor;
-    appearance.strokeThickness = formData.strokeThickness;
-    appearance.dropShadowColor = formData.dropShadowColor;
-    appearance.dropShadowAlpha = formData.dropShadowAlpha;
+    const fontSizeKey = html.find('select[name="fontSize"]').val();
+    const fontSizeMap = {
+      xsmall: 18,
+      small: 24,
+      medium: 32,
+      large: 42,
+      xlarge: 54,
+    };
+    const fontSize = fontSizeMap[fontSizeKey] || 32;
+
+    const bold = html.find('#cnBoldToggle').is(':checked');
+    const italic = html.find('#cnItalicToggle').is(':checked');
+
+    const damageColor = html.find('#cnDamageColorInput').val() || '#ffffff';
+    const healColor = html.find('#cnHealColorInput').val() || '#95ed98';
+
+    const strokeColor = html.find('#cnStrokeColorInput').val() || '#000000';
+    const strokeThickness = parseFloat(html.find('#cnStrokeThicknessRange').val()) || 0;
+
+    const dropShadowColor = html.find('#cnDropShadowColorInput').val() || '#000000';
+    const dropShadowAlpha = parseFloat(html.find('#cnDropShadowAlphaRange').val()) ?? 1;
+
+    const textShadow = (dropShadowAlpha > 0)
+      ? `2px 2px 4px rgba(${this._hexToRgb(dropShadowColor)}, ${dropShadowAlpha})`
+      : 'none';
+
+    const strokeStyle = (strokeThickness > 0)
+      ? `-webkit-text-stroke: ${strokeThickness * 0.5}px ${strokeColor} !important; paint-order: stroke fill !important;`
+      : '-webkit-text-stroke: none !important;';
+
+    const baseStyle = `
+      font-family: '${font}', sans-serif !important;
+      font-size: ${fontSize}px !important;
+      font-weight: ${bold ? 'bold' : 'normal'} !important;
+      font-style: ${italic ? 'italic' : 'normal'} !important;
+      text-shadow: ${textShadow} !important;
+      ${strokeStyle}
+    `;
+
+    html.find('#cnPreviewDamage').attr('style', `${baseStyle} color: ${damageColor} !important;`);
+    html.find('#cnPreviewHeal').attr('style', `${baseStyle} color: ${healColor} !important;`);
+  }
+
+  /**
+   * Convert hex color to comma-separated RGB values for rgba text-shadow.
+   *
+   * @param {string} hex
+   * @return {string}
+   * @private
+   */
+  _hexToRgb(hex) {
+    const cleanHex = hex.replace('#', '');
+    const num = parseInt(cleanHex.length === 3 ? cleanHex.split('').map((c) => c + c).join('') : cleanHex, 16);
+    return `${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}`;
+  }
+
+  /**
+   * Handle form submission in ApplicationV2.
+   */
+  static async onSubmitForm(event, form, formData) {
+    const data = formData.object;
+
+    const appearance = {
+      font: data.font,
+      fontSize: data.fontSize,
+      bold: !!data.bold,
+      italic: !!data.italic,
+      damageColor: data.damageColor,
+      healColor: data.healColor,
+      strokeColor: data.strokeColor,
+      strokeThickness: Number(data.strokeThickness),
+      dropShadowColor: data.dropShadowColor,
+      dropShadowAlpha: Number(data.dropShadowAlpha),
+    };
 
     await game.settings.set(
       Constants.MODULE_NAME,
@@ -181,92 +301,27 @@ export default class CombatNumbersConfig extends FormApplication {
    */
   reset(html) {
     const defaultAppearance = CombatNumbersConfig.DEFAULT_APPEARANCE;
-    const fontKey = this._getFontKeyByName(defaultAppearance.font);
 
-    html.find('select[name="font"]').val(fontKey);
-    html.find('.form-group-font-other').hide();
-    html.find('#fontOther').val('');
+    html.find('select[name="font"]').val(defaultAppearance.font);
     html.find('select[name="fontSize"]').val(defaultAppearance.fontSize);
-    html.find('input[name="bold"]').prop('checked', defaultAppearance.bold);
-    html.find('input[name="italic"]').prop('checked', defaultAppearance.italic);
-    html.find('input[name="damageColor"]').val(defaultAppearance.damageColor);
-    html.find('input[name="damageColorSelector"]').val(defaultAppearance.damageColor);
-    html.find('input[name="healColor"]').val(defaultAppearance.healColor);
-    html.find('input[name="healColorSelector"]').val(defaultAppearance.healColor);
-    html.find('input[name="strokeColor"]').val(defaultAppearance.strokeColor);
-    html.find('input[name="strokeColorSelector"]').val(defaultAppearance.strokeColor);
-    html.find('input[name="strokeThickness"]').val(defaultAppearance.strokeThickness);
-    html.find('.form-group-stroke-thickness .range-value').html(defaultAppearance.strokeThickness);
-    html.find('input[name="dropShadowColor"]').val(defaultAppearance.dropShadowColor);
-    html.find('input[name="dropShadowColorSelector"]').val(defaultAppearance.dropShadowColor);
-    html.find('input[name="dropShadowAlpha"]').val(defaultAppearance.dropShadowAlpha);
-    html.find('.form-group-drop-shadow-alpha .range-value').html(defaultAppearance.dropShadowAlpha);
-  }
+    html.find('#cnBoldToggle').prop('checked', defaultAppearance.bold);
+    html.find('#cnItalicToggle').prop('checked', defaultAppearance.italic);
 
-  /**
-   * Get the numeric font key by the font name itself.
-   *
-   * @param {string} name
-   *   The font name. Ex: "Verdana".
-   *
-   * @return {number}
-   *   The font key in our array.
-   *
-   * @private
-   */
-  _getFontKeyByName(name) {
-    const fontList = this._getFontList();
-    const foundFontKey = fontList.findIndex(
-      (font) => font === name,
-    );
+    html.find('#cnDamageColorInput').val(defaultAppearance.damageColor);
+    html.find('#cnDamageColorPicker').val(defaultAppearance.damageColor);
+    html.find('#cnHealColorInput').val(defaultAppearance.healColor);
+    html.find('#cnHealColorPicker').val(defaultAppearance.healColor);
 
-    if (foundFontKey === -1) {
-      return fontList.findIndex(
-        (font) => font === this.fontOther,
-      );
-    }
+    html.find('#cnStrokeColorInput').val(defaultAppearance.strokeColor);
+    html.find('#cnStrokeColorPicker').val(defaultAppearance.strokeColor);
+    html.find('#cnStrokeThicknessRange').val(defaultAppearance.strokeThickness);
+    html.find('#cnStrokeThicknessValue').text(defaultAppearance.strokeThickness);
 
-    return foundFontKey;
-  }
+    html.find('#cnDropShadowColorInput').val(defaultAppearance.dropShadowColor);
+    html.find('#cnDropShadowColorPicker').val(defaultAppearance.dropShadowColor);
+    html.find('#cnDropShadowAlphaRange').val(defaultAppearance.dropShadowAlpha);
+    html.find('#cnDropShadowAlphaValue').text(defaultAppearance.dropShadowAlpha);
 
-  /**
-   * Get the font list to display in the configuration dialog.
-   *
-   * @return {Array}
-   *
-   * @private
-   */
-  _getFontList() {
-    const fonts = [...CombatNumbersConfig.FONT_FAMILIES];
-    fonts.push(this.fontOther);
-
-    return fonts;
-  }
-
-  /**
-   * Get the selected font by the selected key from the font list.
-   *
-   * @param {number} selectedFontKey
-   *   The selected key of the font list.
-   * @param formData {Object}
-   *   The object of validated form data with which to update the object.
-   *
-   * @return {string}
-   *
-   * @private
-   */
-  _getSelectedFont(selectedFontKey, formData) {
-    const fontList = this._getFontList();
-    const selected = fontList[selectedFontKey];
-
-    if (selected === this.fontOther) {
-      if (!formData?.fontOther) {
-        return CombatNumbersConfig.DEFAULT_APPEARANCE.font;
-      }
-
-      return String(formData.fontOther).trim();
-    }
-
-    return selected;
+    this.updatePreview(html);
   }
 }
