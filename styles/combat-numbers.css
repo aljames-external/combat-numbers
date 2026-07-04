@@ -1,19 +1,60 @@
 /* ============================================================================
-   COMBAT NUMBERS - APPLICATION V2 + EMP/BAD STYLING (APPLICATION V2 WINDOW BODY FIX)
+   COMBAT NUMBERS - APPLICATION V2 + EMP/BAD DESIGN SYSTEM
    ============================================================================ */
 
-/* Outer Application Window, Window Body & Form Parts */
+/* Outer Application Window Frame in ApplicationV2 */
 .application.eskie-world-scripts-form,
-.eskie-world-scripts-form,
-.eskie-world-scripts-form .window-body,
-.eskie-world-scripts-form .window-content,
-.eskie-world-scripts-form form[data-application-part],
-#combat-numbers-config,
+#combat-numbers-config {
+    background: #1a1a1e url("../../../ui/denim.png") repeat !important;
+    border: 1px solid rgba(167, 139, 250, 0.3) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(124, 58, 237, 0.15) !important;
+    color: #f0f0f0 !important;
+    font-family: "Signika", sans-serif !important;
+    overflow: hidden !important;
+}
+
+/* Window Header Styling */
+.application.eskie-world-scripts-form .window-header,
+#combat-numbers-config .window-header {
+    background: rgba(30, 30, 36, 0.85) !important;
+    border-bottom: 1px solid rgba(167, 139, 250, 0.25) !important;
+    padding: 8px 14px !important;
+}
+
+.application.eskie-world-scripts-form .window-title,
+#combat-numbers-config .window-title {
+    color: #ffffff !important;
+    font-family: "Signika", sans-serif !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 8px rgba(167, 139, 250, 0.4) !important;
+}
+
+.application.eskie-world-scripts-form .window-icon,
+#combat-numbers-config .window-icon {
+    color: #a78bfa !important;
+}
+
+.application.eskie-world-scripts-form .header-control,
+#combat-numbers-config .header-control {
+    color: #cbd5e1 !important;
+}
+
+.application.eskie-world-scripts-form .header-control:hover,
+#combat-numbers-config .header-control:hover {
+    color: #ffffff !important;
+}
+
+/* Window Body & Form Container */
+.application.eskie-world-scripts-form .window-body,
+.application.eskie-world-scripts-form .window-content,
+.application.eskie-world-scripts-form form,
 #combat-numbers-config .window-body,
 #combat-numbers-config form {
-    background: #1a1a1e url("../../../ui/denim.png") repeat !important;
-    color: #f0f0f0 !important;
+    background: transparent !important;
     padding: 15px !important;
+    color: #f0f0f0 !important;
     font-family: "Signika", sans-serif !important;
     box-sizing: border-box !important;
 }
@@ -26,7 +67,7 @@
     width: 100% !important;
 }
 
-/* Header Section */
+/* Inner Banner Header */
 .eskie-world-scripts-header {
     display: flex !important;
     align-items: center !important;
@@ -38,12 +79,13 @@
     font-size: 2.2rem !important;
     color: #a78bfa !important;
     text-shadow: 0 0 10px rgba(167, 139, 250, 0.4) !important;
+    flex-shrink: 0 !important;
 }
 
 .eskie-header-text h2 {
     margin: 0 !important;
     border: none !important;
-    font-size: 1.4rem !important;
+    font-size: 1.35rem !important;
     font-weight: 700 !important;
     color: #ffffff !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
@@ -99,7 +141,7 @@
 
 .eskie-category-header h3 {
     margin: 0 !important;
-    font-size: 1.1rem !important;
+    font-size: 1.05rem !important;
     font-weight: 700 !important;
     color: #ffffff !important;
     border: none !important;
