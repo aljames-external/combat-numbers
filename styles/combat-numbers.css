@@ -113,7 +113,7 @@
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
-    max-height: 480px !important;
+    max-height: 420px !important;
     overflow-y: auto !important;
     padding-right: 4px !important;
 }
