@@ -139,17 +139,21 @@ export default class CombatNumbersConfig extends HandlebarsApplicationMixin(Appl
     if (this._getFontList()[fontKey] === this.fontOther) {
       fontOtherFormGroup.show();
       fontOther.val(appearance.font);
+    } else {
+      fontOtherFormGroup.hide();
+      fontOther.val('');
     }
 
-    const fontOtherName = this.fontOther;
-
-    html.find('select[name="font"]').change((e) => {
-      const optionName = $(e.currentTarget).find('option:selected').text();
-      if (optionName !== fontOtherName) {
-        fontOther.val('');
-        fontOtherFormGroup.hide();
+    html.find('select[name="font"]').on('change input', (e) => {
+      const selectedVal = $(e.currentTarget).val();
+      const fontList = this._getFontList();
+      const selectedFontName = fontList[selectedVal] ?? $(e.currentTarget).find('option:selected').text();
+      
+      if (selectedFontName === this.fontOther || selectedVal === String(fontList.indexOf(this.fontOther))) {
+        fontOtherFormGroup.slideDown(150);
       } else {
-        fontOtherFormGroup.show();
+        fontOther.val('');
+        fontOtherFormGroup.slideUp(150);
       }
       this.updatePreview(html);
     });
